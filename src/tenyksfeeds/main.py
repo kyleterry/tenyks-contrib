@@ -3,6 +3,8 @@ from os.path import join
 
 import feedparser
 
+from tenyksclient.meta import meta
+meta.client_name = 'tenyksfeeds'
 from tenyksclient.client import Client, run_client
 import tenyks.config as config
 
@@ -10,7 +12,7 @@ import tenyks.config as config
 class TenyksFeeds(Client):
 
     message_filters = {
-        'add_feed': r'add feed (.*)',
+        'add_feed': [r'add feed (.*)'],
         'list_feeds': r'list feeds',
         'del_feed': r'delete feed (.*)',
     }
