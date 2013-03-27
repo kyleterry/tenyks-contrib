@@ -11,7 +11,7 @@ import tenyks.config as config
 
 class TenyksFeeds(Client):
 
-    message_filters = {
+    irc_message_filters = {
         'add_feed': [r'add feed (.*)'],
         'list_feeds': r'list feeds',
         'del_feed': r'delete feed (.*)',
