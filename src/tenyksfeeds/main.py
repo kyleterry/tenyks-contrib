@@ -3,28 +3,26 @@ from os.path import join
 
 import feedparser
 
-from tenyksclient.meta import meta
-meta.client_name = 'tenyksfeeds'
 from tenyksclient.client import Client, run_client
-import tenyks.config as config
+from tenyksclient.config import settings
 
 
 class TenyksFeeds(Client):
 
-    message_filters = {
+    irc_message_filters = {
         'add_feed': [r'add feed (.*)'],
         'list_feeds': r'list feeds',
         'del_feed': r'delete feed (.*)',
     }
     direct_only = True
 
-    def __init__(self):
-        super(TenyksFeeds, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(TenyksFeeds, self).__init__(*args, **kwargs)
         self.create_tables(self.fetch_cursor())
 
     def fetch_cursor(self):
         db_file = '{name}.db'.format(name=self.name)
-        conn = sqlite3.connect(join(config.DATA_WORKING_DIR, db_file))
+        conn = sqlite3.connect(join(settings.WORKING_DIR, db_file))
         return conn.cursor()
 
     def recurring(self):
@@ -48,39 +46,38 @@ class TenyksFeeds(Client):
                 link=entry['link'])
             if not self.entry_exists(cur, entry['id'], feed_obj) and i < 6:
                 data = {
-                    'version': 1,
-                    'type': 'privmsg',
+                    'command': 'PRIVMSG',
                     'client': self.name,
                     'payload': message,
-                    'irc_channel': channel[1],
-                    'connection_name': connection[1]
+                    'target': channel[1],
+                    'connection': connection[1]
                 }
                 self.send(message, data)
                 self.create_entry(cur, entry['id'], feed_obj)
 
     def handle_add_feed(self, data, match):
-        if data['nick_from'] in data['admins']:
+        if data['admin']:
             feed_url = match.groups()[0]
             self.logger.debug('add_feed: {feed}'.format(feed=feed_url))
             cur = self.fetch_cursor()
             connection = self.get_or_create_connection(cur,
-                    data['connection_name'])
+                    data['connection'])
             channel = self.get_or_create_channel(cur,
-                    connection, data['irc_channel'])
+                    connection, data['target'])
             feed = self.get_or_create_feed(cur, channel, feed_url)
-            self.send('{nick_from}: {feed_url} is a go!'.format(
-                        nick_from=data['nick_from'], feed_url=feed_url),
+            self.send('{nick}: {feed_url} is a go!'.format(
+                        nick=data['nick'], feed_url=feed_url),
                         data=data)
 
     def handle_del_feed(self, data, match):
-        if data['nick_from'] in data['admins']:
+        if data['admin']:
             feed_url = match.groups()[0]
             self.logger.debug('del_feed: {feed}'.format(feed=feed_url))
             cur = self.fetch_cursor()
             connection = self.get_or_create_connection(cur,
-                data['connection_name'])
+                data['connection'])
             channel = self.get_or_create_channel(cur,
-                connection, data['irc_channel'])
+                connection, data['target'])
             if self.feed_exists(cur, feed_url, channel):
                 self.delete_feed(cur, feed_url, channel)
 
@@ -89,18 +86,18 @@ class TenyksFeeds(Client):
         self.logger.debug('list_feeds')
         cur = self.fetch_cursor()
         connection = self.get_or_create_connection(
-                cur, data['connection_name'])
+                cur, data['connection'])
         channel = self.get_or_create_channel(
-                cur, connection, data['irc_channel'])
+                cur, connection, data['target'])
         feed_sql = """
             SELECT * FROM feed
             WHERE channel_id = ?"""
         result = cur.execute(feed_sql, (channel[0],)).fetchone()
         if not result:
-            self.send('{nick}: No feeds.'.format(nick=data['nick_from']), data)
+            self.send('{nick}: No feeds.'.format(nick=data['nick']), data)
         else:
             self.send('{nick}: Feeds for this channel:'.format(
-                        nick=data['nick_from']), data)
+                        nick=data['nick']), data)
             for i, feed in enumerate(cur.execute(feed_sql, (channel[0],))):
                 self.send('{i}. {feed_url}'.format(i=i+1,
                     feed_url=feed[1]), data)
@@ -235,8 +232,7 @@ class TenyksFeeds(Client):
 
 
 def main():
-    feed = TenyksFeeds()
-    run_client(feed)
+    run_client(TenyksFeeds)
 
 
 if __name__ == '__main__':

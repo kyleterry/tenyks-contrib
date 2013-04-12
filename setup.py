@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1.0'
+version = '0.1.23'
 
 setup(name='tenyks-contrib',
       version=version,
@@ -20,6 +20,8 @@ setup(name='tenyks-contrib',
       zip_safe=True,
       install_requires=[
           # -*- Extra requirements: -*-
+          'tenyksclient==0.1.23',
+          'feedparser',
       ],
       entry_points={
           'console_scripts': [
