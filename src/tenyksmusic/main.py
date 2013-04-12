@@ -5,7 +5,7 @@ from tenyksclient.client import Client, run_client
 
 class TenyksMpdMusic(Client):
 
-    message_filters = {
+    irc_message_filters = {
         'play': r'play music',
         'pause': r'pause music',
         'next': r'next song',

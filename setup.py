@@ -27,6 +27,7 @@ setup(name='tenyks-contrib',
           'console_scripts': [
               'tenyksfeeds = tenyksfeeds.main:main',
               'tenyksmusic = tenyksmusic.main:main',
+              'tenykssearch = tenykssearch.core:main',
           ]
       },
       )
