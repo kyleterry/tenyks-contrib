@@ -26,6 +26,7 @@ setup(name='tenyks-contrib',
       entry_points={
           'console_scripts': [
               'tenyksfeeds = tenyksfeeds.main:main',
+              'tenyksleetpoints = tenyksleetpoints.main:main',
               'tenyksmusic = tenyksmusic.main:main',
               'tenykssearch = tenykssearch.core:main',
           ]
