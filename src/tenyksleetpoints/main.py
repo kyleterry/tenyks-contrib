@@ -7,9 +7,11 @@ from tenyksclient.config import settings
 
 class TenyksLeetPoints(Client):
     irc_message_filters = {
-        'add_points': [r'add points (?P<user>.*) (?P<points>[0-9]*)', r'(?P<user>.*) \+(?P<points>[0-9]*) (.*)'],
-        'remove_points': [r'remove points (.*) (.*)',r'\+([0-9]*) (.*)'],
-        'highscore': [r'highscore', r'scores', r'highscores'],
+        'add_points': [r'give (?P<points>[0-9]*) points to (?P<user>.*)',
+                       r'(?P<user>.*) \+(?P<points>[0-9]*)'],
+        'remove_points': [r'remove (?P<points>[0-9]*) points from (?P<user>.*)',
+                       r'(?P<user>.*) \-(?P<points>[0-9]*)'],
+        'highscore': [r'highscore', r'scores', r'highscores', 'what are everyone\'s points?'],
     }
     direct_only = True
 
@@ -23,28 +25,60 @@ class TenyksLeetPoints(Client):
         return conn.cursor()
 
     def handle_add_points(self, data, match):
-        if self.conspirator_exists(self.fetch_cursor()):
-            if data['nick'] != match.groups():
-                self.increment_points(self.fetch_cursor(), int(match.groups)
-            else:
-                self.send("Cannot add points to yourself.", data)
-        else:
-            self.create_conspirator(self.fetch_cursor(), 
+        match_dict = match.groupdict()
 
-        self.send("test", data)
+        if data['nick'] == match_dict['user']:
+            self.send('{nick}: You cannot give points to yourself.'.format(
+                nick=data['nick']), data)
+            return
+
+        if not self.conspirator_exists(self.fetch_cursor(), match_dict['user']):
+            self.create_conspirator(self.fetch_cursor(), match_dict['user'])
+
+        self.increment_points(self.fetch_cursor(), match_dict['user'],
+            int(match_dict['points']))
+
+        self.send('{nick}: Done.'.format(nick=data['nick']), data)
 
     def handle_remove_points(self, data, match):
-        self.send("test", data)
+        match_dict = match.groupdict()
+
+        if data['nick'] == match_dict['user']:
+            self.send('{nick}: You cannot remove points from yourself.'.format(
+                nick=data['nick']), data)
+            return
+
+        if not self.conspirator_exists(self.fetch_cursor(), match_dict['user']):
+            self.create_conspirator(self.fetch_cursor(), match_dict['user'])
+
+        self.decrement_points(self.fetch_cursor(), match_dict['user'],
+            int(match_dict['points']))
+
+        self.send('{nick}: Done.'.format(nick=data['nick']), data)
 
     def handle_highscore(self, data, match):
         self.send("Highscores: ", data)
         for person in self.fetch_conspirators(self.fetch_cursor()):
-            self.send("{0}: {1}".fornmat(person[0], person[1]), data)
+            self.send("{0}: {1}".format(person[1], person[2]), data)
+
+    def increment_points(self, cur, nick, points):
+        result = cur.execute("""
+            UPDATE points SET points = points.points + ?
+            WHERE person = ?
+        """, (points, nick))
+        result.connection.commit()
+
+    def decrement_points(self, cur, nick, points):
+        result = cur.execute("""
+            UPDATE points SET points = points.points - ?
+            WHERE person = ?
+        """, (points, nick))
+        result.connection.commit()
 
     def fetch_conspirators(self, cur):
         result = cur.execute("""
             SELECT * FROM points
-            ORDER BY points,person DESC;
+            ORDER BY points DESC;
         """)
         return result.fetchall()
 
@@ -52,14 +86,14 @@ class TenyksLeetPoints(Client):
         result = cur.execute("""
             SELECT * FROM points
             WHERE person = ?
-        """, (person_name))
+        """, (person_name,))
         return result.fetchone() is not None
 
-    def create_conspirator(self, cur, name):
+    def create_conspirator(self, cur, name, points=None):
         result = cur.execute("""
             INSERT INTO points (person, points)
             VALUES (?, ?)
-        """, (name, 0))
+        """, (name, points or 0))
         result.connection.commit()
 
     def create_tables(self, cur):
