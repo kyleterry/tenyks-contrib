@@ -7,10 +7,10 @@ from tenyksclient.config import settings
 
 class TenyksLeetPoints(Client):
     irc_message_filters = {
-        'add_points': [r'give (?P<points>[0-9]*) points to (?P<user>.*)',
-                       r'(?P<user>.*) \+(?P<points>[0-9]*)'],
-        'remove_points': [r'remove (?P<points>[0-9]*) points from (?P<user>.*)',
-                       r'(?P<user>.*) \-(?P<points>[0-9]*)'],
+        'add_points': [r'^give (?P<points>[0-9]*) points to (?P<nick>[a-zA-Z0-9-_`]*)$',
+                       r'^\+(?P<points>[0-9]*) to (?P<nick>[a-zA-Z0-9-_`]*)$'],
+        'remove_points': [r'^remove (?P<points>[0-9]*) points from (?P<nick>[a-zA-Z0-9-_`]*)$',
+                          r'^\-(?P<points>[0-9]*) to (?P<nick>[a-zA-Z0-9-_`]*)$'],
         'highscore': [r'highscore', r'scores', r'highscores', 'what are everyone\'s points?'],
     }
     direct_only = True
@@ -27,15 +27,15 @@ class TenyksLeetPoints(Client):
     def handle_add_points(self, data, match):
         match_dict = match.groupdict()
 
-        if data['nick'] == match_dict['user']:
+        if data['nick'] == match_dict['nick']:
             self.send('{nick}: You cannot give points to yourself.'.format(
                 nick=data['nick']), data)
             return
 
-        if not self.conspirator_exists(self.fetch_cursor(), match_dict['user']):
-            self.create_conspirator(self.fetch_cursor(), match_dict['user'])
+        if not self.conspirator_exists(self.fetch_cursor(), match_dict['nick']):
+            self.create_conspirator(self.fetch_cursor(), match_dict['nick'])
 
-        self.increment_points(self.fetch_cursor(), match_dict['user'],
+        self.increment_points(self.fetch_cursor(), match_dict['nick'],
             int(match_dict['points']))
 
         self.send('{nick}: Done.'.format(nick=data['nick']), data)
@@ -43,15 +43,15 @@ class TenyksLeetPoints(Client):
     def handle_remove_points(self, data, match):
         match_dict = match.groupdict()
 
-        if data['nick'] == match_dict['user']:
+        if data['nick'] == match_dict['nick']:
             self.send('{nick}: You cannot remove points from yourself.'.format(
                 nick=data['nick']), data)
             return
 
-        if not self.conspirator_exists(self.fetch_cursor(), match_dict['user']):
-            self.create_conspirator(self.fetch_cursor(), match_dict['user'])
+        if not self.conspirator_exists(self.fetch_cursor(), match_dict['nick']):
+            self.create_conspirator(self.fetch_cursor(), match_dict['nick'])
 
-        self.decrement_points(self.fetch_cursor(), match_dict['user'],
+        self.decrement_points(self.fetch_cursor(), match_dict['nick'],
             int(match_dict['points']))
 
         self.send('{nick}: Done.'.format(nick=data['nick']), data)
