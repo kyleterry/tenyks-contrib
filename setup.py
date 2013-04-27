@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1.25'
+version = '0.1.26'
 
 setup(name='tenyks-contrib',
       version=version,
@@ -29,6 +29,7 @@ setup(name='tenyks-contrib',
               'tenyksleetpoints = tenyksleetpoints.main:main',
               'tenyksmusic = tenyksmusic.main:main',
               'tenykssearch = tenykssearch.core:main',
+              'tenykshi = tenykshi.main:main',
           ]
       },
       )
