@@ -22,6 +22,7 @@ setup(name='tenyks-contrib',
           # -*- Extra requirements: -*-
           'tenyksclient==0.1.24',
           'feedparser',
+          'requests'
       ],
       entry_points={
           'console_scripts': [
@@ -30,6 +31,7 @@ setup(name='tenyks-contrib',
               'tenyksmusic = tenyksmusic.main:main',
               'tenykssearch = tenykssearch.core:main',
               'tenykshi = tenykshi.main:main',
+              'tenykslinkscraper = tenykslinkscraper.main:main',
           ]
       },
       )
