@@ -34,7 +34,7 @@ class TenyksLinkScraper(Client):
             self.logger.debug('No POST_URL in the settings for this service. Cannot post.')
             return None
 
-        url = match.groups(0)[0]
+        url = match.group()
         payload = '{"url": "%s", "person": "%s"}' % (match.groups(0)[0], data['nick'])
 
         req = requests.post(settings.POST_URL,
