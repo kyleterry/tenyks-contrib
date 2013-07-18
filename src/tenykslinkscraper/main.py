@@ -6,7 +6,7 @@ class TenyksLinkScraper(Client):
 
     direct_only = False
     irc_message_filters = {
-        'link_posted': r'(https?://([-\w\.]+)+(:\d+)?(/([\w/_\.]*(\?\S+)?)?)?)'
+        'link_posted': [r'\(?\b(http|https)://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]'],
     }
 
     def handle_link_posted(self, data, match):
