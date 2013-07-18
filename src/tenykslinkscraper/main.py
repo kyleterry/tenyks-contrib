@@ -35,7 +35,7 @@ class TenyksLinkScraper(Client):
             return None
 
         url = match.group()
-        payload = '{"url": "%s", "person": "%s"}' % (match.groups(0)[0], data['nick'])
+        payload = '{"url": "%s", "person": "%s"}' % (url, data['nick'])
 
         req = requests.post(settings.POST_URL,
             data=payload,
