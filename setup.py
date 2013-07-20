@@ -32,6 +32,7 @@ setup(name='tenyks-contrib',
               'tenykssearch = tenykssearch.core:main',
               'tenykshi = tenykshi.main:main',
               'tenykslinkscraper = tenykslinkscraper.main:main',
+              'tenykslogger = tenykslogger.main:main',
           ]
       },
       )
