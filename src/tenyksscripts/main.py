@@ -37,7 +37,7 @@ class TenyksScripts(Client):
 
     def handle(self, data, match, filter_name):
         for callback in self.running_scripts:
-            message = callback(data)
+            message = callback(data, settings)
             if message:
                 self.send(message, data)
 
