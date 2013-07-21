@@ -31,6 +31,7 @@ setup(name='tenyks-contrib',
               'tenyksmusic = tenyksmusic.main:main',
               'tenykssearch = tenykssearch.core:main',
               'tenykshi = tenykshi.main:main',
+              'tenyksscripts = tenyksscripts.main:main',
               'tenykslinkscraper = tenykslinkscraper.main:main',
           ]
       },
