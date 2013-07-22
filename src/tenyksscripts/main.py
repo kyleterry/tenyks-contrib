@@ -5,6 +5,8 @@ import logging
 from tenyksclient.client import Client, run_client
 from tenyksclient.config import settings
 
+logger = logging.getLogger('tenyks-contrib.tenyksscripts')
+
 
 class TenyksScripts(Client):
 
@@ -26,6 +28,7 @@ class TenyksScripts(Client):
         for script in settings.SCRIPTS:
             callback = self._fetch_script_callback(script)
             if callback:
+                logger.info('{script} is now live'.format(script=script))
                 self.running_scripts.append(callback)
 
     def _fetch_script_callback(self, script_name):
