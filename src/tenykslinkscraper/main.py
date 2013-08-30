@@ -41,9 +41,10 @@ class TenyksLinkScraper(Client):
             data=payload,
             headers={'content-type': 'application/json'})
 
-        self.logger.debug('Posted {url} to {post_url}. Response code was {code}'.format(
+        self.logger.debug('Posted {url} to {post_url}. Response was {text}. Response code was {code}'.format(
             code=unicode(req.status_code),
             url=url,
+            text=req.text,
             post_url=settings.POST_URL))
 
 def main():
