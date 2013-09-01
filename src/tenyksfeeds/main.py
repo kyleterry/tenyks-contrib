@@ -40,7 +40,7 @@ class TenyksFeeds(Client):
         title = feed['feed']['title']
         self.logger.debug('Looking for entries in {feed}'.format(
             feed=feed_obj[1]))
-        for i, entry in enumerate(reversed(feed['entries'])):
+        for i, entry in enumerate(feed['entries']):
             message = u'[{feed}] {title} - {link}'.format(feed=title,
                 title=entry['title'],
                 link=entry['link'])
