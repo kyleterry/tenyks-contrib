@@ -132,6 +132,7 @@ dark_things = [
     'Your cat doesn\'t even love you',
     'Life is utterly and completely meaningless',
     'Justin Bieber.',
+    'Chinese people are worth less than the goods they produce.'
 ]
 
 
