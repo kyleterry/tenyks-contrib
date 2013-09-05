@@ -45,7 +45,7 @@ class TenyksLinkScraper(Client):
             parser = HTMLParser()
             title = soup.title.string
             title = parser.unescape(title)
-            self.send(title, data)
+            self.send('Link title: %s' % title, data)
 
         payload = '{"url": "%s", "person": "%s"}' % (url, data['nick'])
 
