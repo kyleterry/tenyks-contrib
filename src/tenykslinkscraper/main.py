@@ -3,6 +3,7 @@ import gevent
 import re
 import requests
 from BeautifulSoup import BeautifulSoup
+from HTMLParser import HTMLParser
 from tenyksclient.client import Client, run_client, settings
 
 
@@ -41,7 +42,10 @@ class TenyksLinkScraper(Client):
         if settings.POST_URL_TITLES:
             request = requests.get(url)
             soup = BeautifulSoup(request.text)
-            self.send(soup.title.string, data)
+            parser = HTMLParser()
+            title = soup.title.string
+            title = parser.unescape(title)
+            self.send(title, data)
 
         payload = '{"url": "%s", "person": "%s"}' % (url, data['nick'])
 
