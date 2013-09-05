@@ -1,6 +1,8 @@
-import requests
-import re
 import logging
+import gevent
+import re
+import requests
+from BeautifulSoup import BeautifulSoup
 from tenyksclient.client import Client, run_client, settings
 
 
@@ -35,6 +37,12 @@ class TenyksLinkScraper(Client):
             return None
 
         url = match.group()
+
+        if settings.POST_URL_TITLES:
+            request = requests.get(url)
+            soup = BeautifulSoup(request.text)
+            self.send(soup.title.string, data)
+
         payload = '{"url": "%s", "person": "%s"}' % (url, data['nick'])
 
         req = requests.post(settings.POST_URL,
