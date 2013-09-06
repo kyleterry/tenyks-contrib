@@ -34,6 +34,7 @@ setup(name='tenyks-contrib',
               'tenyksscripts = tenyksscripts.main:main',
               'tenykslinkscraper = tenykslinkscraper.main:main',
               'tenykslogger = tenykslogger.main:main',
+              'tenykswunderground = tenykswunderground.main:main',
           ]
       },
       )
