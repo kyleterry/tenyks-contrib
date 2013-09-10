@@ -10,7 +10,8 @@ goat_stuff = [
     "You successfully enter the goat tower.",
     "You talk to the goat master of the goat tower. He imparts upon you great and dark goat wisdom.",
     "You learn the secrets of the goat tower.",
-    "You become a goat of the goat tower."
+    "You become a goat of the goat tower.",
+    "You die an old man at the top of the tower, your goat herd surrounding your bed."
 ]
 
 def run(data, settings):
