@@ -33,8 +33,8 @@ class TenyksLinkScraper(Client):
             self.logger = logging.getLogger(self.name)
 
     def handle_link_posted(self, data, match):
-        if settings.POST_URL is None:
-            self.logger.debug('No POST_URL in the settings for this service. Cannot post.')
+        if settings.POST_URLS.get(data["target"]) is None:
+            self.logger.debug('No POST_URLS in the settings for this channel. Cannot post.')
             return None
 
         url = match.group()
@@ -52,7 +52,8 @@ class TenyksLinkScraper(Client):
 
         payload = '{"url": "%s", "person": "%s"}' % (url, data['nick'])
 
-        req = requests.post(settings.POST_URL,
+        post_url = settings.POST_URLS[data["target"]]
+        req = requests.post(post_url,
             data=payload,
             headers={'content-type': 'application/json'})
 
@@ -60,7 +61,7 @@ class TenyksLinkScraper(Client):
             code=unicode(req.status_code),
             url=url,
             text=req.text,
-            post_url=settings.POST_URL))
+            post_url=post_url))
 
 def main():
     run_client(TenyksLinkScraper)
