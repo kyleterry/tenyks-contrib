@@ -32,6 +32,9 @@ class TenyksLinkScraper(Client):
                 gevent.spawn(self.run_recurring)
             self.logger = logging.getLogger(self.name)
 
+    def handle(*args, **kwargs):
+        pass
+
     def handle_link_posted(self, data, match):
         if settings.POST_URLS.get(data["target"]) is None:
             self.logger.debug('No POST_URLS in the settings for this channel. Cannot post.')
