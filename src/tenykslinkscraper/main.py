@@ -42,17 +42,6 @@ class TenyksLinkScraper(Client):
 
         url = match.group()
 
-        if settings.POST_URL_TITLES:
-            head = requests.head(url)
-            content_type = head.headers['content-type'].split(' ')[0].strip(';')
-            if content_type == 'text/html':
-                request = requests.get(url)
-                soup = BeautifulSoup(request.text)
-                parser = HTMLParser()
-                title = soup.title.string
-                title = parser.unescape(title)
-                self.send('Link title: %s' % title, data)
-
         payload = '{"url": "%s", "person": "%s"}' % (url, data['nick'])
 
         post_url = settings.POST_URLS[data["target"]]
@@ -65,6 +54,18 @@ class TenyksLinkScraper(Client):
             url=url,
             text=req.text,
             post_url=post_url))
+
+        if settings.POST_URL_TITLES:
+            head = requests.head(url)
+            content_type = head.headers['content-type'].split(' ')[0].strip(';')
+            if content_type == 'text/html':
+                request = requests.get(url)
+                soup = BeautifulSoup(request.text)
+                if soup.title is not None:
+                    parser = HTMLParser()
+                    title = soup.title.string
+                    title = parser.unescape(title)
+                    self.send('Link title: %s' % title, data)
 
 def main():
     run_client(TenyksLinkScraper)
