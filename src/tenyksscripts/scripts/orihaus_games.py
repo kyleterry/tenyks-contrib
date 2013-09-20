@@ -1,21 +1,5 @@
 import requests
 
-'''
-{ 
-    "message":"Download the latest version at noctuelles.net!",
-    "connections":1,
-    "activegames":1,
-    "servers":[
-        {
-            "id":"91",
-            "players":"1",
-            "ip":"94575592176649461",
-            "map":"pi_set",
-            "version":"5"
-        }
-    ]
-}
-'''
 def run(data, settings):
     message = data['payload']
     key = None
