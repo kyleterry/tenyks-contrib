@@ -7,7 +7,7 @@ michigan_facts = [
         "Elsie, MI is the home of the world's largest registered Holstein dairy herd.",
         "Michigan is first in the United States production of peat and magnesium compounds and second in gypsum and iron ore.",
         "Colon, MI is home to the world's largest manufacturer of magic supplies.",
-        "The state Capitol with its majestic dome was built in Lansing in l879.",
+        "The state Capitol with its majestic dome was built in Lansing in 1879.",
         "Although Michigan is often called the 'Wolverine State' there are no longer any wolverines in Michigan.",
         "Michigan ranks first in state boat registrations.",
         "The Packard Motor Car Company in Detroit manufactured the first air-conditioned car in 1939.",
