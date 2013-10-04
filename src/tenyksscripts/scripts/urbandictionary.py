@@ -4,9 +4,9 @@ from BeautifulSoup import BeautifulSoup
 
 def run(data, settings):
     if data['payload'] == 'urban dictionary me':
-        r = requests.get('http://www.urbandictionary.com/random.php')
+        req = requests.get('http://www.urbandictionary.com/random.php')
 
-        soup = BeautifulSoup(r.text,
+        soup = BeautifulSoup(req.text,
             convertEntities=BeautifulSoup.HTML_ENTITIES)
 
         # The word is inner text of the child span of the td with class 'word'
