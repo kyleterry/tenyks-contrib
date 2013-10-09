@@ -50,8 +50,13 @@ class TenyksFeeds(Client):
                     'client': self.name,
                     'payload': message,
                     'target': channel[1],
-                    'connection': connection[1]
+                    'connection': connection[1],
                 }
+                if channel[1].startswith('#'):
+                    data['private_message'] = False
+                else:
+                    data['private_message'] = True
+                    data['nick'] = channel[1]
                 self.send(message, data)
                 self.create_entry(cur, entry['id'], feed_obj)
 
