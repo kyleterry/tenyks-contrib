@@ -67,11 +67,15 @@ class TenyksFeeds(Client):
             cur = self.fetch_cursor()
             connection = self.get_or_create_connection(cur,
                     data['connection'])
+            if data['private_message']:
+                target = data['nick']
+            else:
+                target = data['target']
             channel = self.get_or_create_channel(cur,
-                    connection, data['target'])
+                    connection, target)
             feed = self.get_or_create_feed(cur, channel, feed_url)
-            self.send('{nick}: {feed_url} is a go!'.format(
-                        nick=data['nick'], feed_url=feed_url),
+            self.send('{feed_url} is a go!'.format(
+                        feed_url=feed_url),
                         data=data)
 
     def handle_del_feed(self, data, match):
@@ -99,10 +103,9 @@ class TenyksFeeds(Client):
             WHERE channel_id = ?"""
         result = cur.execute(feed_sql, (channel[0],)).fetchone()
         if not result:
-            self.send('{nick}: No feeds.'.format(nick=data['nick']), data)
+            self.send('No feeds.', data)
         else:
-            self.send('{nick}: Feeds for this channel:'.format(
-                        nick=data['nick']), data)
+            self.send('Feeds for this channel:', data)
             for i, feed in enumerate(cur.execute(feed_sql, (channel[0],))):
                 self.send('{i}. {feed_url}'.format(i=i+1,
                     feed_url=feed[1]), data)
