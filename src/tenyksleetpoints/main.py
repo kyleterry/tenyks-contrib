@@ -1,8 +1,8 @@
 import sqlite3
 from os.path import join
 
-from tenyksclient.client import Client, run_client
-from tenyksclient.config import settings
+from tenyks.client import Client, run_client
+from tenyks.client.config import settings
 
 
 class TenyksLeetPoints(Client):

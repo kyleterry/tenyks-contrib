@@ -4,7 +4,7 @@ import re
 import requests
 from BeautifulSoup import BeautifulSoup
 from HTMLParser import HTMLParser
-from tenyksclient.client import Client, run_client, settings
+from tenyks.client import Client, run_client, settings
 
 
 class TenyksLinkScraper(Client):

@@ -9,7 +9,7 @@ setup(name='tenyks-contrib',
       long_description="""\
 """,
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-      keywords='clients tenyks ircbot services tenyksclient',
+      keywords='clients tenyks ircbot services tenyks.client',
       author='Kyle Terry',
       author_email='kyle@kyleterry.com',
       url='https://github.com/kyleterry/tenyks-contrib',
@@ -20,7 +20,7 @@ setup(name='tenyks-contrib',
       zip_safe=True,
       install_requires=[
           # -*- Extra requirements: -*-
-          'tenyksclient==0.1.24',
+          'tenyks',
           'feedparser',
           'requests'
       ],

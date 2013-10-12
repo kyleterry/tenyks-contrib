@@ -1,7 +1,7 @@
 import requests
 
-from tenyksclient.client import Client, run_client
-from tenyksclient.config import settings
+from tenyks.client import Client, run_client
+from tenyks.client.config import settings
 
 
 SEARCH_URL_TEMPLATE = 'http://autocomplete.wunderground.com/aq?query={location}'

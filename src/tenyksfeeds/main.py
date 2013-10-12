@@ -3,8 +3,8 @@ from os.path import join
 
 import feedparser
 
-from tenyksclient.client import Client, run_client
-from tenyksclient.config import settings
+from tenyks.client import Client, run_client
+from tenyks.client.config import settings
 
 
 class TenyksFeeds(Client):

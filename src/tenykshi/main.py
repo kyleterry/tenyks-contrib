@@ -1,7 +1,7 @@
 from datetime import date
 import random
 
-from tenyksclient.client import Client, run_client
+from tenyks.client import Client, run_client
 
 
 class TenyksHi(Client):

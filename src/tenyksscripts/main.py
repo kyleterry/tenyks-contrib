@@ -2,8 +2,8 @@ from os.path import abspath, join, dirname
 import sys
 import logging
 
-from tenyksclient.client import Client, run_client
-from tenyksclient.config import settings
+from tenyks.client import Client, run_client
+from tenyks.client.config import settings
 
 logger = logging.getLogger('tenyks-contrib.tenyksscripts')
 

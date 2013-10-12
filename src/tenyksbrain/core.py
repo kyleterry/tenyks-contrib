@@ -1,4 +1,4 @@
-from tenyksclient.client import Client, run_client
+from tenyks.client import Client, run_client
 
 
 class TenyksBrain(Client):

@@ -1,8 +1,8 @@
 import sqlite3
 from os.path import join
 
-from tenyksclient.client import Client, run_client
-from tenyksclient.config import settings
+from tenyks.client import Client, run_client
+from tenyks.client.config import settings
 
 
 class TenyksLogger(Client):
@@ -26,7 +26,7 @@ class TenyksLogger(Client):
     def get_db(self):
         db_file = '{name}.db'.format(name=self.name)
         return sqlite3.connect(join(settings.WORKING_DIR, db_file))
-        
+
     def get_or_create_connection(self, db, name):
         connection_sql = """
             SELECT *
@@ -74,14 +74,14 @@ class TenyksLogger(Client):
             result = curs.execute("""
             INSERT INTO %s (name)
             VALUES (?)""" % table, (name,))
-            
+
             pk = curs.lastrowid
 
         return pk
 
     def create_message(self, db, channel_id, host_id, user_id, nick_id, command, message):
         result = db.execute("""
-            INSERT INTO message (channel_id, host_id, user_id, nick_id, command, message) 
+            INSERT INTO message (channel_id, host_id, user_id, nick_id, command, message)
             VALUES (?, ?, ?, ?, ?, ?)
         """, (channel_id, host_id, user_id, nick_id, command, message))
 
