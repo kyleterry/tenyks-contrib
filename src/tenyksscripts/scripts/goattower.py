@@ -11,7 +11,11 @@ goat_stuff = [
     "You talk to the goat master of the goat tower. He imparts upon you great and dark goat wisdom.",
     "You learn the secrets of the goat tower.",
     "You become a goat of the goat tower.",
-    "You die an old man at the top of the tower, your goat herd surrounding your bed."
+    "You die an old man at the top of the tower, your goat herd surrounding your bed.",
+    "You successfully communicate with the goat imperialist. You are financially drained after being mentally frozen by his academic wisdom.",
+    "The goat laughs \"BAAAHHHHHHHHHHAHAHA\" as you are forced to leap from the goat tower",
+    "The scroll from the elder goat states there is a passage way with a green star engraved. You might become rich if you can find this passage.",
+    "The poster reads: \"There is no futBAAAAAAHHHHure but what we mBAAAAHHHHHHHHke for ouBAAAAAAHHHHHHHHHHHHHrselves.\"",
 ]
 
 def run(data, settings):
