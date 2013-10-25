@@ -15,8 +15,8 @@ TYPE_ALERTS = 'alerts'
 class TenyksWeather(Client):
 
     irc_message_filters = {
-        'current_weather': r'current weather (.*)',
-        'weather_alerts': r'weather alerts (.*)',
+        'current_weather': r'^(current\s)?weather (for\s)?(?P<loc>(.*))$',
+        'weather_alerts': r'^(current\s)?weather alerts (for\s)?(?P<loc>(.*))$',
     }
     direct_only = True
 
@@ -40,7 +40,7 @@ class TenyksWeather(Client):
             return data.json()
 
     def handle_current_weather(self, data, match):
-        location = match.groups()[0]
+        location = match.groupdict()['loc']
         location_string = self.fetch_location(location)
         if location_string:
             current_json = self.fetch_weather_data(TYPE_CURRENT, location_string)
@@ -55,7 +55,7 @@ class TenyksWeather(Client):
             self.send('Unknown location', data)
 
     def handle_weather_alerts(self, data, match):
-        location = match.groups()[0]
+        location = match.groupdict()['loc']
         location_string = self.fetch_location(location)
         if location_string:
             alerts_json = self.fetch_weather_data(TYPE_ALERTS, location_string)
