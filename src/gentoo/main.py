@@ -16,6 +16,7 @@ class GentooService(Client):
     irc_message_filters = {
         'get_last_mention': [r'^last gentoo mention$'],
         'find_gentoo': [re.compile(r'\b(gentoo)\b', flags=re.IGNORECASE).search],
+        'funroll': [re.compile(r'\b(funroll)\b', flags=re.IGNORECASE).search],
     }
 
     direct_only = False
@@ -35,6 +36,9 @@ class GentooService(Client):
                 self.send(str(datetime.datetime.fromtimestamp(float(f.read()))), data)
         except IOError:
             self.send('Wow... Never.', data)
+
+    def handle_funroll(self, data, match):
+        self.send('What kinda fun y\'all having?', data)
 
 def main():
     run_client(GentooService)
