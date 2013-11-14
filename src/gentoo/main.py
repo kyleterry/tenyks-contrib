@@ -32,9 +32,9 @@ class GentooService(Client):
     def handle_get_last_mention(self, data, match):
         try:
             with open(join(settings.DATA_WORKING_DIR, self.filename), 'r') as f:
-                return datetime.datetime.fromtimestamp(float(f.read()))
+                self.send(datetime.datetime.fromtimestamp(float(f.read())), data)
         except IOError:
-            return 'Wow... Never.'
+            self.send('Wow... Never.', data)
 
 def main():
     run_client(GentooService)
