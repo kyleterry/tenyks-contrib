@@ -14,8 +14,8 @@ logger = logging.getLogger('tenyks-contrib.gentooservice')
 class GentooService(Client):
 
     irc_message_filters = {
+        'get_last_mention': [r'^last gentoo mention$'],
         'find_gentoo': [re.compile(r'\b(gentoo)\b', flags=re.IGNORECASE).search],
-        'get_last_mention': [r'^last gentoo mention$']
     }
 
     direct_only = False
