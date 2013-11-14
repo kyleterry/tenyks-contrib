@@ -20,7 +20,7 @@ class GentooService(Client):
     direct_only = False
 
     def __init__(self, *args, **kwargs):
-        super(TenyksScripts, self).__init__(*args, **kwargs)
+        super(GentooService, self).__init__(*args, **kwargs)
         self.filename = 'gentoo_last_mention'
 
     def handle_find_gentoo(self, data, match):
