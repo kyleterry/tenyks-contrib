@@ -35,6 +35,7 @@ setup(name='tenyks-contrib',
               'tenykslinkscraper = tenykslinkscraper.main:main',
               'tenykslogger = tenykslogger.main:main',
               'tenykswunderground = tenykswunderground.main:main',
+              'gentooservice = gentoo.main:main',
           ]
       },
       )
