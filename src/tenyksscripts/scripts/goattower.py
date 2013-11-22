@@ -20,4 +20,6 @@ goat_stuff = [
 
 def run(data, settings):
     if data['payload'] == 'goat tower':
-        return random.choice(goat_stuff)
+        say = '{nick}: {outcome}'.format(nick=data['nick'],
+                                         outcome=random.choice(goat_stuff))
+        return say
