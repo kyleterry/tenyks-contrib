@@ -25,4 +25,6 @@ ateball = [
 
 def run(data, settings):
     if '8ball' in data['payload']:
-        return random.choice(ateball)
+            say = '{nick}: {fortune}'.format(nick=data['nick'],
+                                             fortune=random.choice(ateball))
+            return say
