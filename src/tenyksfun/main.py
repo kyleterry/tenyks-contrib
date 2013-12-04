@@ -14,7 +14,7 @@ class TenyksFun(Client):
 
     def handle(self, data, match, filter_name):
         if data['payload'] == "You're doing great work tenyks!":
-            self.send('!dm tenyks', data)
+            self.send('!m tenyks', data)
 
 
 def main():
