@@ -10,7 +10,7 @@ class TenyksFun(Client):
 
     def __init__(self, *args, **kwargs):
         self.hello_counts = {}
-        super(TenyksHi, self).__init__(*args, **kwargs)
+        super(TenyksFun, self).__init__(*args, **kwargs)
 
     def handle(self, data, match, filter_name):
         if data['payload'] == "You're doing great work tenyks!":
