@@ -9,6 +9,7 @@ goat_stuff = [
     "You die by the horns of a goat halfway up the goat tower.",
     "You successfully enter the goat tower.",
     "You talk to the goat master of the goat tower. He imparts upon you great and dark goat wisdom.",
+    "The goat herd attacks your girlfriend, taking her hostage and demanding the release of their imprisoned goat brothers.",
     "You learn the secrets of the goat tower.",
     "You become a goat of the goat tower.",
     "You die an old man at the top of the tower, your goat herd surrounding your bed.",
