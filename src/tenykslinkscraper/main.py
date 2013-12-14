@@ -56,7 +56,8 @@ class TenyksLinkScraper(Client):
             text=req.text,
             post_url=post_url))
 
-        if settings.POST_URL_TITLES:
+        if settings.POST_URL_TITLES and \
+           settings.POST_URL_TITLES.get(data["target"]) == True:
             head = requests.head(url)
             content_type = head.headers['content-type'].split(' ')[0].strip(';')
             if content_type == 'text/html':
