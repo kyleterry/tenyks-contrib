@@ -9,7 +9,7 @@ class TenyksWebpageMonitor(Client):
 
     irc_message_filters = {
         'add_url': [r'add url (.*)'],
-        #'list_url': r'list url',
+        'list_url': r'list url',
         'del_url': r'delete url (.*)',
     }
     direct_only = True
@@ -35,6 +35,25 @@ class TenyksWebpageMonitor(Client):
             connection = self.get_connection(cur, channel)
             for url in self.urls_by_channel(cur, channel):
                 self.url_handler(cur, url, channel, connection)
+
+    def handle_list_url(self, data, match):
+        self.logger.debug('list_urls')
+        cur = self.fetch_cursor()
+        connection = self.get_or_create_connection(
+                cur, data['connection'])
+        channel = self.get_or_create_channel(
+                cur, connection, data['target'])
+        url_sql = """
+            SELECT * FROM url
+            WHERE channel_id = ?"""
+        result = cur.execute(url_sql, (channel[0],)).fetchone()
+        if not result:
+            self.send('No urls monitored.', data)
+        else:
+            self.send('URLs for this channel:', data)
+            for i, feed in enumerate(cur.execute(url_sql, (channel[0],))):
+                self.send('{i}. {url}'.format(i=i+1,
+                    url=feed[1]), data)
 
     def url_handler(self, cur, url, channel, connection):
         self.logger.debug('Checking: {}'.format(url[1]))
