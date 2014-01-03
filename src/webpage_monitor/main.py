@@ -1,8 +1,9 @@
+from datetime import datetime, timedelta
+from dateutil import parser
 from os.path import join
 from tenyks.client import Client, run_client
 from tenyks.client.config import settings
-import sqlite3
-import requests
+import sqlite3, requests
 
 class TenyksWebpageMonitor(Client):
 
@@ -37,6 +38,7 @@ class TenyksWebpageMonitor(Client):
 
     def url_handler(self, cur, url, channel, connection):
         self.logger.debug('Checking: {}'.format(url[1]))
+        should_send_alert = False
         error = None
         r = None
 
@@ -48,9 +50,13 @@ class TenyksWebpageMonitor(Client):
         if r and r.status_code in [404, 502, 503, 504, 401]:
             error = " is returning bad codes!"
 
-        alerts = self.get_alerts(cur, url[0])
+        alert = self.get_most_recent_alert(cur, url[0])
 
-        if error is not None and not alerts:
+        if alert:
+            timestamp = parser.parse(alert[1])
+            should_send_alert = datetime.utcnow() > timestamp + timedelta(minutes=10)
+
+        if error is not None and should_send_alert:
             message = "\x034ALERT\x03: {url}{error} Code: {code}".format(
                 url=url[1], error=error, code=getattr(r, "status_code", "N/A"))
             data = {
@@ -120,11 +126,11 @@ class TenyksWebpageMonitor(Client):
         db_file = '{name}.db'.format(name=self.name)
         return sqlite3.connect(join(settings.WORKING_DIR, db_file))
 
-    def get_alerts(self, cur, url):
+    def get_most_recent_alert(self, cur, url):
         result = cur.execute("""
-            SELECT * FROM alert WHERE url_id = ?
+            SELECT * FROM alert WHERE url_id = ? ORDER BY created_at DESC;
         """, (url,))
-        return result.fetchall()
+        return result.fetchone()
 
     def get_channels(self, cur):
         result = cur.execute("""

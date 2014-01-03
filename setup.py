@@ -22,6 +22,7 @@ setup(name='tenyks-contrib',
           # -*- Extra requirements: -*-
           'tenyks',
           'feedparser',
+          'python-dateutil',
           'requests'
       ],
       entry_points={
