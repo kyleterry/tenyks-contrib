@@ -33,15 +33,15 @@ class TenyksWebpageMonitor(Client):
         for channel in self.get_channels(cur):
             connection = self.get_connection(cur, channel)
             for url in self.urls_by_channel(cur, channel):
-                self.url_handler(cur, url[1], channel, connection)
+                self.url_handler(cur, url, channel, connection)
 
     def url_handler(self, cur, url, channel, connection):
-        self.logger.debug('Checking: {}'.format(url))
+        self.logger.debug('Checking: {}'.format(url[1]))
         error = None
         r = None
 
         try:
-            r = requests.get(url)
+            r = requests.get(url[1])
         except requests.ConnectionError:
             error = " is unreachable!"
 
@@ -50,10 +50,9 @@ class TenyksWebpageMonitor(Client):
 
         alerts = self.get_alerts(cur, url[0])
 
-        if alerts:
-            import ipdb; ipdb.set_trace()
-
         if error is not None and not alerts:
+            message = "\x034ALERT\x03: {url}{error} Code: {code}".format(
+                url=url[1], error=error, code=getattr(r, "status_code", "N/A"))
             data = {
                 'command': 'PRIVMSG',
                 'client': self.name,
@@ -66,12 +65,12 @@ class TenyksWebpageMonitor(Client):
             else:
                 data['private_message'] = True
                 data['nick'] = channel[1]
-            result = db.execute("""
-                INSERT INTO alerts (url)
+            result = cur.execute("""
+                INSERT INTO alert (url_id)
                 VALUES (?)
-            """, (url,))
-            self.send("\x034ALERT\x03: {url}{error} Code: {code}".format(
-                url=url, error=error, code=getattr(r, "status_code", "N/A")), data)
+            """, (url[0],))
+            cur.connection.commit()
+            self.send(message, data)
 
     def handle_add_url(self, data, match):
         if data['admin']:
@@ -162,7 +161,6 @@ class TenyksWebpageMonitor(Client):
         """
         result = cur.execute(url_sql, (channel[0], passed_url))
         url = result.fetchone()
-        import ipdb; ipdb.set_trace()
         if not url:
             result = cur.execute("""
             INSERT INTO url (channel_id, url)
