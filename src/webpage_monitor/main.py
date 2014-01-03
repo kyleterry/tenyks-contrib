@@ -105,6 +105,9 @@ class TenyksWebpageMonitor(Client):
                 connection, data['target'])
             if self.url_exists(cur, url, channel):
                 self.delete_url(cur, url, channel)
+                self.send('{} is now deleted.'.format(url), data)
+            else:
+                self.send('{} did not exist.'.format(url), data)
 
     def url_exists(self, cur, url, channel):
         result = cur.execute("""
