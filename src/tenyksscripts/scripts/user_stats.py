@@ -13,8 +13,8 @@ def run(data, settings):
 
         response = requests.get(url).json()
 
-        if data["total_posts"] == 0:
-            return "No data on that user."
+        if response["total_posts"] == 0:
+            return "No response on that user."
         return "Links: {} First Link: {} Most recent link: {} Average links per hour: {}".format(
-            data["total_posts"], data["first_post_date"], data["most_recent_post"], data["average_posts_per_hour"])
+            response["total_posts"], response["first_post_date"], response["most_recent_post"], response["average_posts_per_hour"])
 
