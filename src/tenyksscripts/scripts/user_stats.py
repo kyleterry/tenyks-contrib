@@ -1,4 +1,4 @@
-import requests, json
+import requests
 
 
 def run(data, settings):
@@ -12,7 +12,6 @@ def run(data, settings):
                 chan=data['target'].strip("#"), user=requested_user)
 
         response = requests.get(url).json()
-        data = json.loads(response)
 
         if data["total_posts"] == 0:
             return "No data on that user."
