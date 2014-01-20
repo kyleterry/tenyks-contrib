@@ -12,6 +12,7 @@ goat_stuff = [
     "The goat herd attacks your girlfriend, taking her hostage and demanding the release of their imprisoned goat brothers.",
     "You learn the secrets of the goat tower.",
     "You become a goat of the goat tower.",
+    "The goats of the goat tower give you a massage with their cloven hooves.",
     "You die an old man at the top of the tower, your goat herd surrounding your bed.",
     "You successfully communicate with the goat imperialist. You are financially drained after being mentally frozen by his academic wisdom.",
     "The goat laughs \"BAAAHHHHHHHHHHAHAHA\" as you are forced to leap from the goat tower",
