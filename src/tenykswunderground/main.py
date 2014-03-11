@@ -42,15 +42,17 @@ class TenyksWeather(Client):
     def handle_current_weather(self, data, match):
         location = match.groupdict()['loc']
         location_string = self.fetch_location(location)
+        #import ipdb; ipdb.set_trace()
         if location_string:
             current_json = self.fetch_weather_data(TYPE_CURRENT, location_string)
             if current_json:
-                template = '{city} is {temp_f}F ({temp_c}C) and {weather}'
+                template = '{city} is {temp} and {weather}; windchill is {chill}; winds are {wind}'
                 self.send(template.format(
                     city=current_json['current_observation']['display_location']['full'],
-                    temp_f=current_json['current_observation']['temp_f'],
-                    temp_c=current_json['current_observation']['temp_c'],
-                    weather=current_json['current_observation']['weather']), data)
+                    temp=current_json['current_observation']['temperature_string'],
+                    weather=current_json['current_observation']['weather'],
+                    chill=current_json['current_observation']['windchill_string'],
+                    wind=current_json['current_observation']['wind_string']), data)
         else:
             self.send('Unknown location', data)
 
