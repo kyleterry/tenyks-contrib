@@ -3,4 +3,4 @@ output = "I'd just like to interject for a moment. What you’re referring to as
 def run(data, settings):
     payload = data['payload'].lower()
     if 'linux' in payload and 'gnu' not in payload:
-        return 'pong'
+        return output
