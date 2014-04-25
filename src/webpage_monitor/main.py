@@ -66,7 +66,7 @@ class TenyksWebpageMonitor(Client):
         except requests.ConnectionError:
             error = " is unreachable!"
 
-        if r and r.status_code in [404, 502, 503, 504, 401]:
+        if r and r.status_code in [500, 404, 502, 503, 504, 401]:
             error = " is returning bad codes!"
 
         alert = self.get_most_recent_alert(cur, url[0])
