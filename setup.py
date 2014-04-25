@@ -23,6 +23,7 @@ setup(name='tenyks-contrib',
           'tenyks',
           'feedparser',
           'python-dateutil',
+          'flask',
           'requests'
       ],
       entry_points={
@@ -38,6 +39,7 @@ setup(name='tenyks-contrib',
               'tenykslogger = tenykslogger.main:main',
               'tenykswunderground = tenykswunderground.main:main',
               'tenykswebpagemonitor = webpage_monitor.main:main',
+              'tenyksweblistener = tenyksweblistener.main:main',
               'gentooservice = gentoo.main:main',
           ]
       },
