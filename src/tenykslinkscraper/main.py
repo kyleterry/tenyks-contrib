@@ -41,9 +41,16 @@ class TenyksLinkScraper(Client):
             self.logger.debug('No POST_URLS in the settings for this channel. Cannot post.')
             return None
 
+        if settings.POST_URLS_SALTS.get(data['target']) is None:
+            self.logger.debug('No security token for this channel. Cannot post.')
+            return None
+
         url = match.group()
 
-        payload = '{"url": "%s", "person": "%s"}' % (url, data['nick'])
+        submission_salt = settings.POST_URLS_SALTS[data['target']]
+
+        payload = '{"url": "%s", "person": "%s", "submission_salt": "%s"}' % (
+                url, data['nick'], submission_salt)
 
         post_url = settings.POST_URLS[data["target"]]
         req = requests.post(post_url,
