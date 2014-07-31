@@ -22,6 +22,7 @@ setup(name='tenyks-contrib',
       install_requires=[
           # -*- Extra requirements: -*-
           'tenyks',
+          'tenyksservice==1.1',
           'feedparser',
           'python-dateutil',
           'flask',
