@@ -6,11 +6,11 @@ version = '0.1.26'
 
 setup(name='tenyks-contrib',
       version=version,
-      description="Contributed clients for the tenyks IRC bot",
+      description="Contributed services for the tenyks IRC bot",
       long_description="""\
 """,
       classifiers=[], # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
-      keywords='clients tenyks ircbot services tenyks.client',
+      keywords='clients tenyks ircbot services tenyks-service',
       author='Kyle Terry',
       author_email='kyle@kyleterry.com',
       url='https://github.com/kyleterry/tenyks-contrib',
@@ -21,12 +21,13 @@ setup(name='tenyks-contrib',
       zip_safe=True,
       install_requires=[
           # -*- Extra requirements: -*-
-          'tenyks',
-          'tenyksservice==1.1',
+          'tenyks', # This is until I port everything to tenyksservice
+          'tenyksservice',
           'feedparser',
           'python-dateutil',
           'flask',
-          'requests'
+          'requests',
+          'nose'
       ],
       entry_points={
           'console_scripts': [

@@ -2,13 +2,13 @@ from os.path import abspath, join, dirname
 import sys
 import logging
 
-from tenyks.client import Client, run_client
-from tenyks.client.config import settings
+from tenyksservice import TenyksService, run_service
+from tenyksservice.config import settings
 
 logger = logging.getLogger('tenyks-contrib.tenyksscripts')
 
 
-class TenyksScripts(Client):
+class TenyksScripts(TenyksService):
 
     irc_message_filters = {
         'list_scripts': [r'list scripts'],
@@ -46,7 +46,7 @@ class TenyksScripts(Client):
 
 
 def main():
-    run_client(TenyksScripts)
+    run_service(TenyksScripts)
 
 
 if __name__ == '__main__':
