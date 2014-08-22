@@ -7,7 +7,7 @@ yql_url = 'http://query.yahooapis.com/v1/public/yql'
 message = '{name} ({symbol}) {last_price} {change} ({change_percent}) {market_cap}'
 
 def run(data, settings):
-    match_re = re.compile(r'^stock (?P<symbol>\w{,4})$').match
+    match_re = re.compile(r'^stock (?P<symbol>[\w=]{,10})$').match
     match = match_re(data['payload'])
     if match:
         symbol = match.groupdict()['symbol']
