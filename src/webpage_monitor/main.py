@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 from dateutil import parser
 from os.path import join
-from tenyks.client import Client, run_client
-from tenyks.client.config import settings
+from tenyksservice import TenyksService, run_service
+from tenyksservice.config import settings
 import sqlite3, requests
 
-class TenyksWebpageMonitor(Client):
+class TenyksWebpageMonitor(TenyksService):
 
     irc_message_filters = {
         'add_url': [r'add url (.*)'],
@@ -253,7 +253,7 @@ class TenyksWebpageMonitor(Client):
 
 
 def main():
-    run_client(TenyksWebpageMonitor)
+    run_service(TenyksWebpageMonitor)
 
 if __name__ == '__main__':
     main()
