@@ -20,7 +20,7 @@ class HahaMeter(TenyksService):
 
     def handle_haha(self, data, match):
         self.logger.debug("Haha offender; logging the incident.")
-        with open(self.HAHAFILE, 'w+') as f:
+        with open(self.HAHAFILE, 'a+') as f:
             f.write('{} {}\n'.format(int(time.time()), data['nick']))
 
 
