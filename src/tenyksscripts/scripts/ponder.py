@@ -35,7 +35,7 @@ def add_url_from_payload(payload, ponderings):
         return False
     if not is_url(url):
         return False
-    with open(ponderings, 'w') as f:
+    with open(ponderings, 'a') as f:
         f.write(url + '\n')
     return True
 
