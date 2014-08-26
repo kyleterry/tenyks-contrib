@@ -1,5 +1,6 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 import time
+import re
 
 from tenyksservice import TenyksService, run_service
 from tenyksservice.config import settings
@@ -10,7 +11,7 @@ class HahaMeter(TenyksService):
     direct_only = False
 
     irc_message_filters = {
-        'haha': [r'haha']
+        'haha': [re.compile(r'\b(haha)\b', flags=re.IGNORECASE).search]
     }
 
     def __init__(self, *args, **kwargs):
