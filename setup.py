@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1.26'
+version = '0.1.27'
 
 setup(name='tenyks-contrib',
       version=version,
@@ -26,7 +26,8 @@ setup(name='tenyks-contrib',
           'feedparser',
           'python-dateutil',
           'requests',
-          'nose'
+          'nose',
+          'pytz'
       ],
       entry_points={
           'console_scripts': [
