@@ -1,7 +1,7 @@
 import random
 
 def run(data, settings):
-    if data['payload'] == 'goat tower':
+    if data['payload'] == 'goat thrower':
         distance = random.randrange(0, 100)
         judgement = ""
         if distance == 0:
