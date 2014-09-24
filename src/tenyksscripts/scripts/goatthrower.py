@@ -3,6 +3,7 @@ import random
 def run(data, settings):
     if data['payload'] == 'goat thrower':
         distance = random.randrange(0, 100)
+        num_goats = random.randrange(1, 5)
         judgement = ""
         if distance == 0:
             judgement = "Fucking awful."
@@ -17,6 +18,7 @@ def run(data, settings):
 
         say = '{nick}: You manage to heave {num_goats} goats for {distance}M. {judgement}'.format(
                 nick = data['nick'],
+                num_goats = num_goats,
                 distance = distance,
                 judgement = judgement
         )
