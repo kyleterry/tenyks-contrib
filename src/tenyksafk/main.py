@@ -23,7 +23,7 @@ class AFK(TenyksService):
             self.create_user(self.fetch_cursor(), nick, True)
 
         if not self.user_away(self.fetch_cursor(), nick):
-            self.send('{nick} is now AFK.'.format(nick=data['nick']), data) 
+            self.send('{nick} is now AFK.'.format(nick=nick), data) 
 
         self.user_depart(self.fetch_cursor(), nick)
 
