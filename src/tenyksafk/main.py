@@ -55,7 +55,7 @@ class AFK(TenyksService):
         else:
             self.send('AFKers: {afk}'.format(afk=', '.join('%s' % nick for nick in afkers)), data)
 
-     def create_tables(self, cur):
+    def create_tables(self, cur):
         table_sql = '''
         CREATE TABLE IF NOT EXISTS afkers (
             id INTEGER PRIMARY KEY,
