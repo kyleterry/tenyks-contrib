@@ -1,7 +1,5 @@
 from tenyksservice import TenyksService, run_service
 
-away = {}
-
 class AFK(TenyksService):
     direct_only = False
     irc_message_filters = {
@@ -11,33 +9,37 @@ class AFK(TenyksService):
         'list': [r'list']
     }
 
+    def __init__(self, *args, **kwargs):
+        super(AFK, self).__init__(*args, **kwargs)
+        self.away = {}
+
     def handle_depart(self, data, match):
         nick = data['nick']
 
-        if not (nick in away and away[nick]):
+        if not (nick in self.away and self.away[nick]):
             self.send('{nick} is now AFK.'.format(nick=data['nick']), data)    
 
-        away[data['nick']] = True
+        self.away[data['nick']] = True
 
     def handle_return(self, data, match):
         nick = data['nick']
 
-        if not (nick in away and not away[nick]):
+        if not (nick in self.away and not self.away[nick]):
             self.send('{nick} is no longer AFK.'.format(nick=nick), data)
 
-        away[data['nick']] = False
+        self.away[data['nick']] = False
 
     def handle_query(self, data, match):
         nick = match.groupdict()['nick']
 
-        if nick in away:
-            status = 'AFK' if away[nick] else 'present'
+        if nick in self.away:
+            status = 'AFK' if self.away[nick] else 'present'
             self.send('{nick} is currently {status}.'.format(nick=nick, status=status), data)
         else:
             self.send('{nick}\'s status is unknown.'.format(nick=nick), data)
 
     def handle_list(self, data, match):
-        afk_list = {k: v for k, v in away.iteritems() if v}.keys()
+        afk_list = {k: v for k, v in self.away.iteritems() if v}.keys()
 
         if len(afk_list) == 0:
             self.send('There are currently no AFKers.', data)
