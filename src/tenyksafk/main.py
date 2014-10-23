@@ -30,9 +30,12 @@ class AFK(TenyksService):
 
     def handle_list(self, data, match):
         afk_list = {k: v for k, v in away.iteritems() if v}.keys()
-        afk_list.sort()
-        self.logger.debug('AFKers: {afk}'.format(afk=', '.join(afk_list)))
-        self.send('AFKers: {afk}'.format(afk=', '.join(afk_list)), data)
+
+        if len(afk_list) == 0:
+            self.send('There are currently no AFKers.', data)
+        else:
+            afk_list.sort()
+            self.send('AFKers: {afk}'.format(afk=', '.join(afk_list)), data)
 
 
 def main():
