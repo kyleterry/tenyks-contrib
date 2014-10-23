@@ -13,7 +13,6 @@ class AFK(TenyksService):
 
     def __init__(self, *args, **kwargs):
         super(AFK, self).__init__(*args, **kwargs)
-        self.away = {}
         self.create_tables(self.fetch_cursor())
 
     def handle_depart(self, data, match):
@@ -41,8 +40,8 @@ class AFK(TenyksService):
     def handle_query(self, data, match):
         nick = match.groupdict()['nick']
 
-        if nick in self.away:
-            status = 'AFK' if self.away[nick] else 'present'
+        if self.user_exists(self.fetch_cursor(), nick):
+            status = 'AFK' if self.user_away(self.fetch_cursor(), nick) else 'present'
             self.send('{nick} is currently {status}.'.format(nick=nick, status=status), data)
         else:
             self.send('{nick}\'s status is unknown.'.format(nick=nick), data)
