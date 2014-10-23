@@ -12,24 +12,20 @@ class AFK(TenyksService):
     }
 
     def handle_depart(self, data, match):
-        self.logger.debug('{nick} went AFK.'.format(nick=data['nick']))
-        self.send('{nick} is now AFK.'.format(nick=data['nick']), data)
         away[data['nick']] = True
+        self.send('{nick} is now AFK.'.format(nick=data['nick']), data)
 
     def handle_return(self, data, match):
-        self.logger.debug('{nick} is no longer AFK.'.format(nick=data['nick']))
-        self.send('{nick} is no longer AFK.'.format(nick=data['nick']), data)
         away[data['nick']] = False
+        self.send('{nick} is no longer AFK.'.format(nick=data['nick']), data)
 
     def handle_query(self, data, match):
         nick = match.groupdict()['nick']
 
         if nick in away:
             status = 'AFK' if away[nick] else 'present'
-            self.logger.debug('{nick} is currently {status}'.format(nick=nick, status=status))
             self.send('{nick} is currently {status}.'.format(nick=nick, status=status), data)
         else:
-            self.logger.debug('{nick}\' status is unknown.'.format(nick=nick))
             self.send('{nick}\'s status is unknown.'.format(nick=nick), data)
 
     def handle_list(self, data, match):
