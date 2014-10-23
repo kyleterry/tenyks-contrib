@@ -7,7 +7,8 @@ class AFK(TenyksService):
     irc_message_filters = {
         'depart': [r'^(?i)(xopa|away|afk|brb)'],
         'return': [r'^(?i)(xoka|back)'],
-        'query': [r'(?P<nick>(.*))\?$']
+        'query': [r'(?P<nick>(.*))\?$'],
+        'list': [r'list']
     }
 
     def handle_depart(self, data, match):
@@ -30,6 +31,12 @@ class AFK(TenyksService):
         else:
             self.logger.debug('{nick}\' status is unknown.'.format(nick=nick))
             self.send('{nick}\'s status is unknown.'.format(nick=nick), data)
+
+    def handle_list(self, data, match):
+        afk_list = {k: v for k, v in away.iteritems() if v}.keys()
+        afk_list.sort()
+        self.logger.debug('AFKers: {afk}'.format(afk=', '.join(afk_list)))
+        self.send('AFKers: {afk}'.format(afk=', '.join(afk_list)), data)
 
 
 def main():
