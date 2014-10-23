@@ -12,12 +12,20 @@ class AFK(TenyksService):
     }
 
     def handle_depart(self, data, match):
+        nick = data['nick']
+
+        if not (nick in away and away[nick]):
+            self.send('{nick} is now AFK.'.format(nick=data['nick']), data)    
+
         away[data['nick']] = True
-        self.send('{nick} is now AFK.'.format(nick=data['nick']), data)
 
     def handle_return(self, data, match):
+        nick = data['nick']
+
+        if not (nick in away and not away[nick]):
+            self.send('{nick} is no longer AFK.'.format(nick=nick), data)
+
         away[data['nick']] = False
-        self.send('{nick} is no longer AFK.'.format(nick=data['nick']), data)
 
     def handle_query(self, data, match):
         nick = match.groupdict()['nick']
