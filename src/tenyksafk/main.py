@@ -1,6 +1,7 @@
 import sqlite3
 from os.path import join
 from tenyksservice import TenyksService, run_service
+from tenyksservice.config import settings
 
 class AFK(TenyksService):
     direct_only = False
@@ -66,7 +67,7 @@ class AFK(TenyksService):
 
     def fetch_cursor(self):
         db_file = '{name}.db'.format(name=self.name)
-        conn = sqlite3.connect(db_file)
+        conn = sqlite3.connect(join(settings.WORKING_DIR, db_file))
         return conn.cursor()
 
     def create_user(self, cur, nick, away=False):
