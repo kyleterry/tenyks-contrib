@@ -5,6 +5,7 @@ from ddate.base import DDate
 class DiscordianDate(TenyksService):
     direct_only = True
     irc_message_filters = {
+        'usage': [r'^(?i)(ddate|discordian) (?i)(usage|help)'],
         'date': [
             r'^(?i)(ddate|discordian) (?P<month>(.*)) (?P<day>(.*)) (?P<year>(.*))',
             r'^(?i)(ddate|discordian) (?P<month>(.*))-(?P<day>(.*))-(?P<year>(.*))',
@@ -15,6 +16,9 @@ class DiscordianDate(TenyksService):
 
     def __init__(self, *args, **kwargs):
         super(DiscordianDate, self).__init__(*args, **kwargs)
+
+    def handle_usage(self, data, match):
+        self.send('Accepted formats: mm dd yyyy, mm-dd-yyyy, mm/dd/yyyy', data)
 
     def handle_date(self, data, match):
         year = int(match.groupdict()['year'])
