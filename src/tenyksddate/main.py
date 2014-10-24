@@ -12,15 +12,15 @@ class DiscordianDate(TenyksService):
     def __init__(self, *args, **kwargs):
         super(DiscordianDate, self).__init__(*args, **kwargs)
 
-    def handle_today(self, data, match):
-        self.send(str(DDate()), data)
-
     def handle_date(self, data, match):
         year = int(match.groupdict()['year'])
         month = int(match.groupdict()['month'])
         day = int(match.groupdict()['day'])
 
         self.send(str(DDate(datetime.date(year=year, month=month, day=day))), data)
+
+    def handle_today(self, data, match):
+        self.send(str(DDate()), data)
 
 
 def main():
