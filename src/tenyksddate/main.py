@@ -5,7 +5,11 @@ from ddate.base import DDate
 class DiscordianDate(TenyksService):
     direct_only = True
     irc_message_filters = {
-        'date': [r'^(?i)(ddate|discordian) (?P<month>(.*)) (?P<day>(.*)) (?P<year>(.*))'],
+        'date': [
+            r'^(?i)(ddate|discordian) (?P<month>(.*)) (?P<day>(.*)) (?P<year>(.*))',
+            r'^(?i)(ddate|discordian) (?P<month>(.*))-(?P<day>(.*))-(?P<year>(.*))',
+            r'^(?i)(ddate|discordian) (?P<month>(.*))/(?P<day>(.*))/(?P<year>(.*))'
+        ],
         'today': [r'^(?i)(ddate|discordian)']
     }
 
