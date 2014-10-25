@@ -1,17 +1,16 @@
 import datetime
-from tenyksservice import TenyksService, run_service
+from tenyksservice import TenyksService, FilterChain, run_service
 from ddate.base import DDate
 
 class DiscordianDate(TenyksService):
-    direct_only = True
     irc_message_filters = {
-        'usage': [r'^(?i)(ddate|discordian) (?i)(usage|help)'],
-        'date': [
+        'usage': FilterChain([r'^(?i)(ddate|discordian) (?i)(usage|help)'], direct_only=True),
+        'date': FilterChain([
             r'^(?i)(ddate|discordian) (?P<month>(.*)) (?P<day>(.*)) (?P<year>(.*))',
             r'^(?i)(ddate|discordian) (?P<month>(.*))-(?P<day>(.*))-(?P<year>(.*))',
             r'^(?i)(ddate|discordian) (?P<month>(.*))/(?P<day>(.*))/(?P<year>(.*))'
-        ],
-        'today': [r'^(?i)(ddate|discordian)']
+        ], direct_only=True),
+        'today': FilterChain([r'^(?i)(ddate|discordian)'], direct_only=True)
     }
 
     def __init__(self, *args, **kwargs):
