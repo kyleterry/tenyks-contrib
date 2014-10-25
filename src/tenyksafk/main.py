@@ -1,15 +1,14 @@
 import sqlite3
 from os.path import join
-from tenyksservice import TenyksService, run_service
+from tenyksservice import TenyksService, FilterChain, run_service
 from tenyksservice.config import settings
 
 class AFK(TenyksService):
-    direct_only = False
     irc_message_filters = {
-        'depart': [r'^(?i)(xopa|away|afk|brb)'],
-        'return': [r'^(?i)(xoka|back)'],
-        'query': [r'(?P<nick>(.*))\?$'],
-        'list': [r'list']
+        'depart': FilterChain([r'^(?i)(xopa|away|afk|brb)'], direct_only=False),
+        'return': FilterChain([r'^(?i)(xoka|back)'], direct_only=False),
+        'query': FilterChain([r'(?P<nick>(.*))\?$'], direct_only=True),
+        'list': FilterChain([r'list'], direct_only=True)
     }
 
     def __init__(self, *args, **kwargs):
