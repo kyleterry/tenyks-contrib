@@ -46,6 +46,7 @@ setup(name='tenyks-contrib',
               'tenykswebpagemonitor = webpage_monitor.main:main',
               'tenyksweblistener = tenyksweblistener.main:main',
               'tenyksddate = tenyksddate.main:main',
+              'tenyksafk = tenyksafk.main:main',
               'gentooservice = gentoo.main:main',
           ]
       },
