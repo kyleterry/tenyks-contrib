@@ -61,7 +61,7 @@ class TenyksLeetPoints(TenyksService):
         self.send('{nick}: Done.'.format(nick=data['nick']), data)
 
     def handle_highscore(self, data, match):
-        resp = requests.post('http://ix.io?f:0='.format(
+        resp = requests.post('http://ix.io?f:0={}'.format(
             ''.join(['{} {}\n'.format(i[1], i[2])
                   for i in self.fetch_conspirators(self.fetch_cursor())])))
         self.send('Highscores: ', resp.content)
