@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 
-version = '0.1.27'
+version = '0.2.0'
 
 setup(name='tenyks-contrib',
       version=version,
@@ -22,7 +22,7 @@ setup(name='tenyks-contrib',
       install_requires=[
           # -*- Extra requirements: -*-
           'tenyks',  # This is until I port everything to tenyksservice
-          'tenyksservice',
+          'tenyksservice>=1.5',
           'feedparser',
           'python-dateutil',
           'requests',
