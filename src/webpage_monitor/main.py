@@ -1,16 +1,16 @@
 from datetime import datetime, timedelta
 from dateutil import parser
 from os.path import join
-from tenyksservice import TenyksService, run_service
+from tenyksservice import TenyksService, run_service, FilterChain
 from tenyksservice.config import settings
 import sqlite3, requests
 
 class TenyksWebpageMonitor(TenyksService):
 
     irc_message_filters = {
-        'add_url': [r'add url (.*)'],
-        'list_url': r'list url',
-        'del_url': r'delete url (.*)',
+        'add_url': FilterChain([r'add url (.*)'], direct_only=True),
+        'list_url': FilterChain(r'list url', direct_only=True),
+        'del_url': FilterChain(r'delete url (.*)', direct_only=True)
     }
     direct_only = True
     recurring_delay = 30

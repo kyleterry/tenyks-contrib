@@ -2,16 +2,16 @@
 import time
 import re
 
-from tenyksservice import TenyksService, run_service
+from tenyksservice import TenyksService, run_service, FilterChain
 from tenyksservice.config import settings
 
 
 class HahaMeter(TenyksService):
 
-    direct_only = False
-
     irc_message_filters = {
-        'haha': [re.compile(r'\b(haha)\b', flags=re.IGNORECASE).search]
+        'haha': FilterChain(
+            [re.compile(r'\b(haha)\b', flags=re.IGNORECASE).search],
+            direct_only=False)
     }
 
     def __init__(self, *args, **kwargs):
