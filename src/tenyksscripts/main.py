@@ -2,7 +2,7 @@ from os.path import abspath, join, dirname
 import sys
 import logging
 
-from tenyksservice import TenyksService, run_service
+from tenyksservice import TenyksService, run_service, FilterChain
 from tenyksservice.config import settings
 
 logger = logging.getLogger('tenyks-contrib.tenyksscripts')
@@ -11,10 +11,9 @@ logger = logging.getLogger('tenyks-contrib.tenyksscripts')
 class TenyksScripts(TenyksService):
 
     irc_message_filters = {
-        'list_scripts': [r'list scripts'],
+        'list_scripts': FilterChain([r'list scripts'], direct_only=True)
     }
 
-    direct_only = True
     pass_on_non_match = True
 
 
