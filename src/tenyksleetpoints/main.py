@@ -9,13 +9,13 @@ from tenyksservice.config import settings
 class TenyksLeetPoints(TenyksService):
     irc_message_filters = {
         'add_points': FilterChain(
-            [r'^give (?P<points>[0-9]*) points to (?P<nick>[a-zA-Z0-9-_`]*)$',
-             r'^\+(?P<points>[0-9]*) to (?P<nick>[a-zA-Z0-9-_`]*)$'], direct_only=True),
+            [r'^(give|\+)\s*(?P<points>[0-9]*)\s*(point[s]*)* to (?P<nick>[a-zA-Z0-9-_`]*)\s*$'],
+            direct_only=True),
         'remove_points': FilterChain(
-            [r'^remove (?P<points>[0-9]*) points from (?P<nick>[a-zA-Z0-9-_`]*)$',
-             r'^\-(?P<points>[0-9]*) to (?P<nick>[a-zA-Z0-9-_`]*)$'], direct_only=True),
+            [r'^(take|\-)\s*(?P<points>[0-9]*)\s*(point[s]*)* from (?P<nick>[a-zA-Z0-9-_`]*)\s*$'],
+            direct_only=True),
         'highscore': FilterChain(
-            [r'highscore', r'scores', r'highscores',
+            [r'high scores', r'highscore', r'scores', r'highscores',
              'what are everyone\'s points?'], direct_only=True)
     }
 
