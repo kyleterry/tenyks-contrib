@@ -14,6 +14,12 @@ TYPE_CURRENT = 'current'
 TYPE_ALERTS = 'alerts'
 TYPE_FORECAST = 'forecast'
 
+HELP_TEXT = '''Tenyks Weather:
+    All command are direct messages with the bot
+    weather <zip or city> - current weather conditions
+    weather alerts <zip or city> - current advisories and alerts
+    forecast <zip or city> - forecast for the next few days'''
+
 
 class TenyksWeather(TenyksService):
 
@@ -25,6 +31,8 @@ class TenyksWeather(TenyksService):
         'forecast': FilterChain([r'^forecast (for\s)?(?P<loc>(.*))$', ],
                                       direct_only=True),
     }
+
+    help_text = HELP_TEXT
 
     def __init__(self, *args, **kwargs):
         super(TenyksWeather, self).__init__(*args, **kwargs)
