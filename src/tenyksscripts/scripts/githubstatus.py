@@ -5,9 +5,9 @@ def run(data, settings):
     if data['payload'] == 'github status':
         status_url = 'https://status.github.com/api/status.json'
         last_message_url = 'https://status.github.com/api/last-message.json'
-        status = requests.get('https://status.github.com/api/status.json').json()
+        status = requests.get(status_url).json()
         if status['status'] in ('minor', 'major'):
-            last_message = requests.get(last_message_url)
+            last_message = requests.get(last_message_url).json()
             return 'Github is having problems as of {timestamp}: {message}'.format(
                     timestamp=last_message['created_on'], message=last_message['body'])
         else:

@@ -1,11 +1,11 @@
 import sqlite3
 from os.path import join
 
-from tenyks.client import Client, run_client
-from tenyks.client.config import settings
+from tenyksservice import TenyksService, run_service
+from tenyksservice.config import settings
 
 
-class TenyksLogger(Client):
+class TenyksLogger(TenyksService):
     def __init__(self, *args, **kwargs):
         super(TenyksLogger, self).__init__(*args, **kwargs)
 
@@ -128,7 +128,7 @@ class TenyksLogger(Client):
 
 
 def main():
-    run_client(TenyksLogger)
+    run_service(TenyksLogger)
 
 
 if __name__ == '__main__':
