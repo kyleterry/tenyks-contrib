@@ -1,0 +1,46 @@
+DEBUG = True
+SERVICE_NAME = 'tenyksscripts'
+SERVICE_VERSION = '0.1.0'
+SERVICE_UUID = '9f152704-2905-4304-9cc6-bbb053218ff8'
+SERVICE_DESCRIPTION = 'This service exists for small "quick" commands implemented as simple run() functions'
+
+# Scripts to enable. Look in ./scripts and add module import style entries here.
+# You can also import any thing that exists in PYTHONPATH and takes the correct
+# parameters in a run() function.
+SCRIPTS = ['scripts.ping', 'scripts.catfact', 'scripts.aww', 'scripts.catnip',
+           'scripts.dark', 'scripts.forking', 'scripts.urbandictionary',
+            'scripts.githubstatus', 'scripts.hextime', 'scripts.goattower', 'scripts.goatthrower',
+            'scripts.ponder', 'scripts.michiganfact', 'scripts.portlandfact',
+            'scripts.usstatus', 'scripts.numbersapi', 'scripts.ddgdefine', 'scripts.printerfact',
+            'scripts.stocks', 'scripts.8ball', 'scripts.orihaus_games', 'scripts.jnerulastimezone']
+
+
+##############################################################################
+# The following setting defines a dictionary containing Redis connection
+# information used when connecting to the Redis server.
+#
+# This setting is required.
+
+REDIS_CONNECTION = {
+    'host': 'localhost',
+    'port': 6379,
+    'db': 0,
+    'password': None,
+}
+##############################################################################
+
+
+##############################################################################
+# The following channel settings are for when you need to change the default
+# Redis channel key for each pipe respectively. BROADCAST_SERVICE_CHANNEL
+# is used for messages going from Tenyks to Redis for the clients.
+# BROADCAST_ROBOT_CHANNEL is used for messages going from clients to Tenyks
+# for IRC.
+#
+# These are namespaced, so you shouldn't need to change them.
+#
+# These settings are optional
+
+BROADCAST_SERVICE_CHANNEL = 'tenyks.service.broadcast'
+BROADCAST_ROBOT_CHANNEL = 'tenyks.robot.broadcast'
+##############################################################################
