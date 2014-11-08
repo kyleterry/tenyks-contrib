@@ -12,7 +12,7 @@ class TenyksLinkScraper(Client):
 
     direct_only = False
     irc_message_filters = {
-        'link_posted': [r'\(?\b(http|https)://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|]'],
+        'link_posted': [r'\b((http|https)://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|])[.,]?\s*([^)]*)$'], #does not match punctuation at the end of a link. will not match if there is a closing bracket after the link[crude way of ignoring links in parens and a subset of long speils as titles]
     }
 
     # MONKEYPATCHING IS DUMB
@@ -45,12 +45,17 @@ class TenyksLinkScraper(Client):
             self.logger.debug('No security token for this channel. Cannot post.')
             return None
 
-        url = match.group()
+        url = match.group(1)
+        
+        suggested_title = match.group(3) #text after the url is assumed to be a title
 
         submission_salt = settings.POST_URLS_SALTS[data['target']]
-
-        payload = '{"url": "%s", "person": "%s", "submission_salt": "%s"}' % (
-                url, data['nick'], submission_salt)
+        
+        payload = ''
+        if len(suggested_title) > 0:
+            payload = '{"url": "%s", "person": "%s", "title":"%s", "submission_salt": "%s"}' % (url, data['nick'], suggested_title, submission_salt)
+        else:
+            payload = '{"url": "%s", "person": "%s", "submission_salt": "%s"}' % (url, data['nick'], submission_salt)
 
         post_url = settings.POST_URLS[data["target"]]
         req = requests.post(post_url,
