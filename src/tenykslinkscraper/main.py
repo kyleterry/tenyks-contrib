@@ -2,6 +2,7 @@ import logging
 import gevent
 import re
 import requests
+import json
 from BeautifulSoup import BeautifulSoup
 from HTMLParser import HTMLParser
 from tenyks.client import Client, run_client
@@ -46,20 +47,23 @@ class TenyksLinkScraper(Client):
             return None
 
         url = match.group(1)
-        
+
         suggested_title = match.group(3) #text after the url is assumed to be a title
 
         submission_salt = settings.POST_URLS_SALTS[data['target']]
-        
-        payload = ''
-        if len(suggested_title) > 0:
-            payload = '{"url": "%s", "person": "%s", "title":"%s", "submission_salt": "%s"}' % (url, data['nick'], suggested_title, submission_salt)
-        else:
-            payload = '{"url": "%s", "person": "%s", "submission_salt": "%s"}' % (url, data['nick'], submission_salt)
+
+        payload = {
+            "url": url,
+            "person": data['nick'],
+            "submission_salt": submission_salt,
+        }
+
+        if suggested_title:
+            payload["title"] = suggested_title
 
         post_url = settings.POST_URLS[data["target"]]
         req = requests.post(post_url,
-            data=payload,
+            data=json.dumps(payload),
             headers={'content-type': 'application/json'})
 
         self.logger.debug('Posted {url} to {post_url}. Response was {text}. Response code was {code}'.format(
