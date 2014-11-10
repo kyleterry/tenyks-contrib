@@ -5,7 +5,7 @@ def run(data, settings):
         if random.randint(0, 110) == 0:
             outcome = random.randint(0, 2)
             if outcome == 0:
-                return "{nick}: The goat thrower engulfs you in a billowing wave of goat. Goats swim over your body as they reduce your flesh to a blackened pile of goat droppings.".format(nick = data['nick'])
+                return "{nick}: The goat thrower engulfs you in a billowing wave of goat. Goats swim over your body as they reduce your flesh to a blackened pile of goat feces.".format(nick = data['nick'])
             else:
                 return "{nick}: The goat thrower issues a stream of goats out onto the bushlands. The goats spread all over the forest, causing an irreversable reduction in biodiversity.".format(nick = data['nick'])
         else:
