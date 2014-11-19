@@ -14,6 +14,7 @@ goat_stuff = [
     "You become a goat of the goat tower.",
     "The goats of the goat tower give you a massage with their cloven hooves.",
     "You die an old man at the top of the tower, your goat herd surrounding your bed.",
+    "You successfully enter the goat tower. Or do you. In patternist Tegmark-4 space you haven't truly entered anything until you've defeated 5 neoreactionaries in midi-to-midi combat.",
     "You successfully communicate with the goat imperialist. You are financially drained after being mentally frozen by his academic wisdom.",
     "The goat laughs \"BAAAHHHHHHHHHHAHAHA\" as you are forced to leap from the goat tower",
     "The scroll from the elder goat states there is a passage way with a green star engraved. You might become rich if you can find this passage.",
