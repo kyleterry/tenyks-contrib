@@ -27,7 +27,8 @@ setup(name='tenyks-contrib',
           'python-dateutil',
           'requests',
           'nose',
-          'pytz'
+          'pytz',
+          'BeautifulSoup'
       ],
       entry_points={
           'console_scripts': [

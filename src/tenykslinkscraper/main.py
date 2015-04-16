@@ -23,7 +23,7 @@ class TenyksLinkScraper(Client):
             if self.irc_message_filters:
                 self.re_irc_message_filters = {}
                 for name, regexes in self.irc_message_filters.iteritems():
-                    if not name in self.re_irc_message_filters:
+                    if name not in self.re_irc_message_filters:
                         self.re_irc_message_filters[name] = []
                     if isinstance(regexes, basestring):
                         regexes = [regexes]
@@ -39,16 +39,19 @@ class TenyksLinkScraper(Client):
 
     def handle_link_posted(self, data, match):
         if settings.POST_URLS.get(data["target"]) is None:
-            self.logger.debug('No POST_URLS in the settings for this channel. Cannot post.')
+            self.logger.debug(
+                'No POST_URLS in the settings for this channel. Cannot post.')
             return None
 
         if settings.POST_URLS_SALTS.get(data['target']) is None:
-            self.logger.debug('No security token for this channel. Cannot post.')
+            self.logger.debug(
+                'No security token for this channel. Cannot post.')
             return None
 
         url = match.group(1)
 
-        suggested_title = match.group(3) #text after the url is assumed to be a title
+        # text after the url is assumed to be a title
+        suggested_title = match.group(3)
 
         submission_salt = settings.POST_URLS_SALTS[data['target']]
 
@@ -62,18 +65,21 @@ class TenyksLinkScraper(Client):
             payload["title"] = suggested_title
 
         post_url = settings.POST_URLS[data["target"]]
-        req = requests.post(post_url,
-            data=json.dumps(payload),
-            headers={'content-type': 'application/json'})
+        response = requests.post(post_url,
+                                 data=json.dumps(payload),
+                                 headers={'content-type': 'application/json'})
+
+        if response.status_code != 200:
+            self.send('Link Scraper Error: {}'.format(response.text), data)
 
         self.logger.debug('Posted {url} to {post_url}. Response was {text}. Response code was {code}'.format(
-            code=unicode(req.status_code),
+            code=unicode(response.status_code),
             url=url,
-            text=req.text,
+            text=response.text,
             post_url=post_url))
 
         if settings.POST_URL_TITLES and \
-           settings.POST_URL_TITLES.get(data["target"]) == True:
+           settings.POST_URL_TITLES.get(data["target"]):
             head = requests.head(url)
             content_type = head.headers['content-type'].split(' ')[0].strip(';')
             if content_type == 'text/html':
@@ -83,7 +89,9 @@ class TenyksLinkScraper(Client):
                     parser = HTMLParser()
                     title = soup.title.string
                     title = parser.unescape(title)
-                    self.send('Link title: %s' % title, data)
+                    title = title.strip()  # kill newlines and whitespace...
+                    self.send('Link title: {}'.format(title), data)
+
 
 def main():
     run_client(TenyksLinkScraper)
