@@ -83,7 +83,8 @@ class TenyksLinkScraper(Client):
             head = requests.head(url)
             content_type = head.headers['content-type'].split(' ')[0].strip(';')
             if content_type == 'text/html':
-                request = requests.get(url)
+                request = requests.get(url, headers={
+                    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/44.0.2403.89 Chrome/44.0.2403.89 Safari/537.36')
                 soup = BeautifulSoup(request.text)
                 if soup.title is not None:
                     parser = HTMLParser()
