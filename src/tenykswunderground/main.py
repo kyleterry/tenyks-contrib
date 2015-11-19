@@ -43,7 +43,7 @@ class TenyksWeather(TenyksService):
         search = requests.get(SEARCH_URL_TEMPLATE.format(location=location_query))
         search_json = search.json()
         if search_json['RESULTS']:
-            return search_json['RESULTS'][0]['l']
+            return (search_json['RESULTS'][0]['l'], search_json['RESULTS'][0]['name'])
         return None
 
     def fetch_weather_data(self, data_type, location_string):
@@ -64,9 +64,9 @@ class TenyksWeather(TenyksService):
 
     def handle_current_weather(self, data, match):
         location = match.groupdict()['loc']
-        location_string = self.fetch_location(location)
-        if location_string:
-            current_json = self.fetch_weather_data(TYPE_CURRENT, location_string)
+        location_data = self.fetch_location(location)
+        if location_data:
+            current_json = self.fetch_weather_data(TYPE_CURRENT, location_data[0])
             if current_json:
                 template = '{city} is {temp} and {weather}; windchill is {chill}; winds are {wind}'
                 self.send(template.format(
@@ -80,9 +80,9 @@ class TenyksWeather(TenyksService):
 
     def handle_weather_alerts(self, data, match):
         location = match.groupdict()['loc']
-        location_string = self.fetch_location(location)
-        if location_string:
-            alerts_json = self.fetch_weather_data(TYPE_ALERTS, location_string)
+        location_data = self.fetch_location(location)
+        if location_data:
+            alerts_json = self.fetch_weather_data(TYPE_ALERTS, location_data[0])
             if alerts_json and alerts_json['alerts']:
                 top_alert = alerts_json['alerts'][0]
                 print top_alert
@@ -97,15 +97,18 @@ class TenyksWeather(TenyksService):
 
     def handle_forecast(self, data, match):
         location = match.groupdict()['loc']
-        location_string = self.fetch_location(location)
-        if location_string:
+        location_data = self.fetch_location(location)
+        if location_data:
             forecast_json = self.fetch_weather_data(
                 TYPE_FORECAST, location_string)
             if forecast_json:
                 template = '{day} - {message}'
+                self.send('Here is your forecast for {location}:'.format(
+                    location=location_data[1]
+                ))
                 i = 0
                 for day in forecast_json['forecast']['txt_forecast']['forecastday']:
-                    if i < 5:
+                    if i < 7:
                         self.send(template.format(
                             day=day['title'], message=day['fcttext']), data)
                     else:
