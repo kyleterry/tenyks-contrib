@@ -105,7 +105,7 @@ class TenyksWeather(TenyksService):
                 template = '{day} - {message}'
                 self.send('Here is your forecast for {location}:'.format(
                     location=location_data[1]
-                ))
+                ), data)
                 i = 0
                 for day in forecast_json['forecast']['txt_forecast']['forecastday']:
                     if i < 7:
