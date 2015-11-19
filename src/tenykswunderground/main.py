@@ -100,7 +100,7 @@ class TenyksWeather(TenyksService):
         location_data = self.fetch_location(location)
         if location_data:
             forecast_json = self.fetch_weather_data(
-                TYPE_FORECAST, location_string)
+                TYPE_FORECAST, location_data[0])
             if forecast_json:
                 template = '{day} - {message}'
                 self.send('Here is your forecast for {location}:'.format(
