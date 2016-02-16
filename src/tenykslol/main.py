@@ -6,9 +6,7 @@ class TenyksLol(TenyksService):
         'lol': FilterChain([r"lol"],
                              direct_only=False),
         'max_chain':  FilterChain([r"^max chain$"],
-                                 direct_only=False),
-        'everything_else':  FilterChain([r"^[^l][^o][^l].*$"],
-                     direct_only=False)
+                                 direct_only=False)
     }
     
 
@@ -42,14 +40,7 @@ class TenyksLol(TenyksService):
         return "\x03{}L\x03{}O\x03{}L\x03{}B\x03{}O\x03{}W".format(*six_rand)
 
     def handle_max_chain(self, data, match):
-        self.send("{}: max chain is currently {}".format(data["user"][1:], self.max_chain), data)
-
-    def handle_everything_else(self, data, match):
-        self.logger.debug("FUCK")
-        self.reset_counters(reset_max=False)
-
-    def handle_private(self, data, match):
-        self.send('fu trinque', data)
+        self.send("{}: max chain is {}, current chain at {}".format(data["nick"], self.max_chain, self.counter), data)
 
 
 def main():
