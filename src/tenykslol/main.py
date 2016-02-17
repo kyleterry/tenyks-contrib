@@ -9,27 +9,32 @@ class TenyksLol(TenyksService):
                                  direct_only=False)
     }
     
-
     def __init__(self, name, settings):
         super(TenyksLol, self).__init__(name, settings)
-        self.reset_counters()
-        self.lollers = set()
+        # store counters, max chains and lollers on a per-channel basis
+        self.lollers = dict()
+        self.counter = dict()
+        self.max_chain = dict()
 
-    def reset_counters(self, reset_max=True):
-        self.counter = 0
-        self.lollers = set()
+    def reset_counters(self, channel, reset_max=True):
+        self.counter[channel] = 0
+        self.lollers[channel] = set()
         if reset_max:
-            self.max_chain = random.randint(2,8)
-            self.logger.debug("max chain is {}".format(self.max_chain))
+            self.max_chain[channel] = random.randint(2,9)
+            self.logger.debug("max chain is {}".format(self.max_chain[channel]))
 
     def handle_lol(self, data, match):
-        if data["user"] not in self.lollers:
-            self.logger.debug("counter at {}".format(self.counter))
-            self.counter = self.counter + 1
-            self.lollers.add(data["user"])
+        channel = data["target"]
+        # first registered laugh in this channel (wow sad)
+        if channel not in self.lollers:
+            self.reset_counters(channel)
+        if data["user"] not in self.lollers[channel]:
+            self.logger.debug("counter at {}".format(self.counter[channel]))
+            self.counter[channel] = self.counter[channel] + 1
+            self.lollers[channel].add(data["user"])
         
-            if self.counter >= self.max_chain:
-                self.reset_counters()
+            if self.counter[channel] >= self.max_chain[channel]:
+                self.reset_counters(channel)
                 self.logger.debug('spreading the lolbow')
                 rainbow = self.create_rainbow()
                 self.send(rainbow, data)
@@ -40,7 +45,9 @@ class TenyksLol(TenyksService):
         return "\x03{}L\x03{}O\x03{}L\x03{}B\x03{}O\x03{}W".format(*six_rand)
 
     def handle_max_chain(self, data, match):
-        self.send("{}: max chain is {}, current chain at {}".format(data["nick"], self.max_chain, self.counter), data)
+        channel = data["target"]
+        self.send("{}: max chain is {}, current chain at {}".format(data["nick"], self.max_chain[channel],
+            self.counter[channel]), data)
 
 
 def main():
