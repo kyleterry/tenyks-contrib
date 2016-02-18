@@ -48,6 +48,7 @@ setup(name='tenyks-contrib',
               'tenyksweblistener = tenyksweblistener.main:main',
               'tenyksddate = tenyksddate.main:main',
               'gentooservice = gentoo.main:main',
+              'tenykslol = tenykslol.main:main',
           ]
       },
       )

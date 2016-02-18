@@ -64,7 +64,7 @@ class TenyksLeetPoints(TenyksService):
         resp = requests.post('http://ix.io?f:0={}'.format(
             ''.join(['{} {}\n'.format(i[1], i[2])
                   for i in self.fetch_conspirators(self.fetch_cursor())])))
-        self.send('Highscores: ', resp.content)
+        self.send('Highscores: {}'.format(resp.content), data)
 
     def increment_points(self, cur, nick, points):
         result = cur.execute("""
