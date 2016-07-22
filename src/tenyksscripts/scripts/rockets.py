@@ -4,7 +4,7 @@ import time
 
 
 def run(data, settings):
-    if data["payload"] != "nextlaunch":
+    if data["payload"] not in ["nextlaunch", "next launch", "smooth baby rocket", "WHOOOOOOOOOOOOOSH"]:
         return
 
     launches = requests.get("https://launchlibrary.net/1.2/launch", params={"next": 1, "mode": "verbose"}).json()
