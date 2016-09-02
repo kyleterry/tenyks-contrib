@@ -137,5 +137,5 @@ dark_things = [
 
 
 def run(data, settings):
-    if data['payload'] == 'tell me something dark':
+    if data['payload'] in ['tell me something dark', 'fuck me up fam', 'fmuf']:
         return random.choice(dark_things)
