@@ -17,7 +17,7 @@ class TenyksTwitter(TenyksService):
 
         req = requests.get(url)
         soup = BeautifulSoup(req.text, "html.parser")
-        result = soup.title.text.split("Twitter: ")[1].replace('"', "")
+        result = unicode(soup.title.text.split("Twitter: ")[1].replace('"', "")).encode("utf-8")
         urls = re.findall('http[s]?://t.co/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', result)
 
         for url in urls:
