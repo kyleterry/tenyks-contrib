@@ -1,9 +1,8 @@
 import logging
-import gevent
 import re
 import requests
 import json
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
 from tenyksservice import TenyksService, run_service, FilterChain
 from tenyks.config import settings
@@ -30,7 +29,7 @@ class TenyksLinkScraper(TenyksService):
                         self.re_irc_message_filters[name].append(
                             re.compile(regex).search)
             if hasattr(self, 'recurring'):
-                gevent.spawn(self.run_recurring)
+                self.loop.create_task(self.run_recurring())
             self.logger = logging.getLogger(self.name)
 
     def handle(*args, **kwargs):
