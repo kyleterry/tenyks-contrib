@@ -3,18 +3,17 @@ from os.path import join
 
 import feedparser
 
-from tenyks.client import Client, run_client
-from tenyks.client.config import settings
+from tenyksservice import TenyksService, run_service, FilterChain
+from tenyksservice.config import settings
 
 
-class TenyksFeeds(Client):
+class TenyksFeeds(TenyksService):
 
     irc_message_filters = {
-        'add_feed': [r'add feed (.*)'],
-        'list_feeds': r'list feeds',
-        'del_feed': r'delete feed (.*)',
+        'add_feed': FilterChain([r'add feed (.*)'], direct_only=True),
+        'list_feeds': FilterChain([r'list feeds'], direct_only=True),
+        'del_feed': FilterChain([r'delete feed (.*)'], direct_only=True)
     }
-    direct_only = True
 
     def __init__(self, *args, **kwargs):
         super(TenyksFeeds, self).__init__(*args, **kwargs)
@@ -52,43 +51,34 @@ class TenyksFeeds(Client):
                     'target': channel[1],
                     'connection': connection[1],
                 }
-                if channel[1].startswith('#'):
-                    data['private_message'] = False
-                else:
-                    data['private_message'] = True
-                    data['nick'] = channel[1]
                 self.send(message, data)
                 self.create_entry(cur, entry['id'], feed_obj)
 
     def handle_add_feed(self, data, match):
-        if data['admin']:
-            feed_url = match.groups()[0]
-            self.logger.debug('add_feed: {feed}'.format(feed=feed_url))
-            cur = self.fetch_cursor()
-            connection = self.get_or_create_connection(cur,
-                    data['connection'])
-            if data['private_message']:
-                target = data['nick']
-            else:
-                target = data['target']
-            channel = self.get_or_create_channel(cur,
-                    connection, target)
-            feed = self.get_or_create_feed(cur, channel, feed_url)
-            self.send('{feed_url} is a go!'.format(
-                        feed_url=feed_url),
-                        data=data)
+        feed_url = match.groups()[0]
+        self.logger.debug('add_feed: {feed}'.format(feed=feed_url))
+        cur = self.fetch_cursor()
+        connection = self.get_or_create_connection(cur,
+                data['connection'])
+        target = data['target']
+        channel = self.get_or_create_channel(cur,
+                connection, target)
+        feed = self.get_or_create_feed(cur, channel, feed_url)
+        self.send('{feed_url} is a go!'.format(
+                    feed_url=feed_url),
+                    data=data)
+
 
     def handle_del_feed(self, data, match):
-        if data['admin']:
-            feed_url = match.groups()[0]
-            self.logger.debug('del_feed: {feed}'.format(feed=feed_url))
-            cur = self.fetch_cursor()
-            connection = self.get_or_create_connection(cur,
-                data['connection'])
-            channel = self.get_or_create_channel(cur,
-                connection, data['target'])
-            if self.feed_exists(cur, feed_url, channel):
-                self.delete_feed(cur, feed_url, channel)
+        feed_url = match.groups()[0]
+        self.logger.debug('del_feed: {feed}'.format(feed=feed_url))
+        cur = self.fetch_cursor()
+        connection = self.get_or_create_connection(cur,
+            data['connection'])
+        channel = self.get_or_create_channel(cur,
+            connection, data['target'])
+        if self.feed_exists(cur, feed_url, channel):
+            self.delete_feed(cur, feed_url, channel)
 
 
     def handle_list_feeds(self, data, match):
@@ -240,7 +230,7 @@ class TenyksFeeds(Client):
 
 
 def main():
-    run_client(TenyksFeeds)
+    run_service(TenyksFeeds)
 
 
 if __name__ == '__main__':

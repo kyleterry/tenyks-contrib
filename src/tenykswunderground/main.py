@@ -85,7 +85,7 @@ class TenyksWeather(TenyksService):
             alerts_json = self.fetch_weather_data(TYPE_ALERTS, location_data[0])
             if alerts_json and alerts_json['alerts']:
                 top_alert = alerts_json['alerts'][0]
-                print top_alert
+                print(top_alert)
                 template = '{advisory} - {message}'
                 self.send(template.format(
                     advisory=top_alert['description'],

@@ -28,7 +28,7 @@ setup(name='tenyks-contrib',
           'requests',
           'nose',
           'pytz',
-          'BeautifulSoup'
+          'bs4'
       ],
       entry_points={
           'console_scripts': [
