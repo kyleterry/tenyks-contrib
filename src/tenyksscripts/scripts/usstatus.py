@@ -18,4 +18,4 @@ def run(data, settings):
                 str(datetime.now()))
 
 if __name__ == '__main__':
-    print run({'payload': 'US status'}, [])
+    print(run({'payload': 'US status'}, []))
