@@ -1,10 +1,7 @@
-from tenyks.client import Client, run_client
+from tenyksservice import TenyksService, run_service
 
 
-class TenyksBrain(Client):
-
-    direct_only = True
-
+class TenyksBrain(TenyksService):
     def handle(self, data, match, command):
         if data['payload'].lower() == 'why do you hate me?':
             self.send(
@@ -14,4 +11,4 @@ class TenyksBrain(Client):
 
 if __name__ == '__main__':
     brain = TenyksBrain()
-    run_client(brain)
+    run_service(brain)

@@ -21,7 +21,7 @@ class TenyksWebpageMonitor(TenyksService):
 
     def fetch_cursor(self):
         db_file = 'eccentric_garbanzo.db'
-        print "DB in {}".format(join(settings.WORKING_DIR, db_file))
+        print("DB in {}".format(join(settings.WORKING_DIR, db_file)))
         conn = sqlite3.connect(join(settings.WORKING_DIR, db_file))
         return conn.cursor()
 

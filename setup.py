@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 
-version = '0.2.1'
+version = '0.3.0'
 
 setup(name='tenyks-contrib',
       version=version,
@@ -21,8 +21,7 @@ setup(name='tenyks-contrib',
       zip_safe=True,
       install_requires=[
           # -*- Extra requirements: -*-
-          'tenyks',  # This is until I port everything to tenyksservice
-          'tenyksservice>=1.5',
+          'tenyksservice>=2',
           'feedparser',
           'python-dateutil',
           'requests',
@@ -37,9 +36,7 @@ setup(name='tenyks-contrib',
               'tenyksleetpoints = tenyksleetpoints.main:main',
               'tenyksmusic = tenyksmusic.main:main',
               'tenykssearch = tenykssearch.core:main',
-              'tenykshi = tenykshi.main:main',
               'tenykshahameter = tenykshahameter.main:main',
-              'tenyksfun = tenyksfun.main:main',
               'tenyksscripts = tenyksscripts.main:main',
               'tenykslinkscraper = tenykslinkscraper.main:main',
               'tenykslogger = tenykslogger.main:main',
@@ -48,7 +45,7 @@ setup(name='tenyks-contrib',
               'tenykswebpagemonitor = webpage_monitor.main:main',
               'tenyksweblistener = tenyksweblistener.main:main',
               'tenyksddate = tenyksddate.main:main',
-              'gentooservice = gentoo.main:main',
+              'tenyksgentoo = tenyksgentoo.main:main',
               'tenykslol = tenykslol.main:main',
           ]
       },

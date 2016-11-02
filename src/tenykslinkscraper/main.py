@@ -5,15 +5,14 @@ import requests
 import json
 from BeautifulSoup import BeautifulSoup
 from HTMLParser import HTMLParser
-from tenyks.client import Client, run_client
-from tenyks.client.config import settings
+from tenyksservice import TenyksService, run_service, FilterChain
+from tenyks.config import settings
 
 
-class TenyksLinkScraper(Client):
+class TenyksLinkScraper(TenyksService):
 
-    direct_only = False
     irc_message_filters = {
-        'link_posted': [r'\b((http|https)://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|])[.,]?\s*([^)]*)$'], #does not match punctuation at the end of a link. will not match if there is a closing bracket after the link[crude way of ignoring links in parens and a subset of long speils as titles]
+        'link_posted': FilterChain([r'\b((http|https)://[-A-Za-z0-9+&@#/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#/%=~_()|])[.,]?\s*([^)]*)$']), #does not match punctuation at the end of a link. will not match if there is a closing bracket after the link[crude way of ignoring links in parens and a subset of long speils as titles]
     }
 
     # MONKEYPATCHING IS DUMB
@@ -96,7 +95,7 @@ class TenyksLinkScraper(Client):
 
 
 def main():
-    run_client(TenyksLinkScraper)
+    run_service(TenyksLinkScraper)
 
 if __name__ == '__main__':
     main()
