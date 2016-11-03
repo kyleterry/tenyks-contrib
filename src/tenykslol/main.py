@@ -1,14 +1,15 @@
 from tenyksservice import TenyksService, run_service, FilterChain
 import random
 
+
 class TenyksLol(TenyksService):
     irc_message_filters = {
         'lol': FilterChain([r"lol"],
-                             direct_only=False),
+                           direct_only=False),
         'max_chain':  FilterChain([r"^max chain$"],
-                                 direct_only=False)
+                                  direct_only=False)
     }
-    
+
     def __init__(self, name, settings):
         super(TenyksLol, self).__init__(name, settings)
         # store counters, max chains and lollers on a per-channel basis
@@ -20,7 +21,7 @@ class TenyksLol(TenyksService):
         self.counter[channel] = 0
         self.lollers[channel] = set()
         if reset_max:
-            self.max_chain[channel] = random.randint(2,9)
+            self.max_chain[channel] = random.randint(2, 9)
             self.logger.debug("max chain is {}".format(self.max_chain[channel]))
 
     def handle_lol(self, data, match):
@@ -32,7 +33,7 @@ class TenyksLol(TenyksService):
             self.logger.debug("counter at {}".format(self.counter[channel]))
             self.counter[channel] = self.counter[channel] + 1
             self.lollers[channel].add(data["user"])
-        
+
             if self.counter[channel] >= self.max_chain[channel]:
                 self.reset_counters(channel)
                 self.logger.debug('spreading the lolbow')
@@ -46,7 +47,9 @@ class TenyksLol(TenyksService):
 
     def handle_max_chain(self, data, match):
         channel = data["target"]
-        self.send("{}: max chain is {}, current chain at {}".format(data["nick"], self.max_chain[channel],
+        self.send("{}: max chain is {}, current chain at {}".format(
+            data["nick"],
+            self.max_chain[channel],
             self.counter[channel]), data)
 
 
