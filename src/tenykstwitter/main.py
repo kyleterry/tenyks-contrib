@@ -6,7 +6,7 @@ from tenyksservice import TenyksService, run_service, FilterChain
 class TenyksTwitter(TenyksService):
     direct_only = False
     irc_message_filters = {
-        'tweet': FilterChain([r'.*((https?)://(www\.)?twitter\.com/[^.\s]+)']),
+            'tweet': FilterChain([r'((https?)://(www\.)?twitter\.com/[^.\s]+/[^.\s]+)']),
     }
 
     def __init__(self, name, settings):
