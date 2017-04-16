@@ -9,10 +9,10 @@ from tenyksservice.config import settings
 class TenyksLeetPoints(TenyksService):
     irc_message_filters = {
         'add_points': FilterChain(
-            [r'^(give|\+)\s*(?P<points>[0-9]*)\s*(point[s]*)* to (?P<nick>[a-zA-Z0-9-_`]*)\s*$'],
+            [r'^(\+)\s*(?P<points>[0-9]*)\s*(point[s]*)* to (?P<nick>[a-zA-Z0-9-_`]*)\s*$'],
             direct_only=True),
         'remove_points': FilterChain(
-            [r'^(take|\-)\s*(?P<points>[0-9]*)\s*(point[s]*)* from (?P<nick>[a-zA-Z0-9-_`]*)\s*$'],
+            [r'^(\-)\s*(?P<points>[0-9]*)\s*(point[s]*)* to (?P<nick>[a-zA-Z0-9-_`]*)\s*$'],
             direct_only=True),
         'highscore': FilterChain(
             [r'high scores', r'highscore', r'scores', r'highscores',
