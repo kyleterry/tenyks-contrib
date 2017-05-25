@@ -22,4 +22,4 @@ def run(data, settings):
         return shit_links
 #todo add more SICK STATZ
     if 'shithouse stats' in data['payload'].lower():
-	return num_memes
+	return "Total Memes: {num}".format(num = num_memes)
