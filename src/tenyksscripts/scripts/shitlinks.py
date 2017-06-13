@@ -32,4 +32,4 @@ def run(data, settings):
 
     # todo add more SICK STATZ
     if 'shithouse stats' in data['payload'].lower():
-        return "Total Memes: {0}".format(answer[1])
+        return "Total Bumps: {0}".format(answer[1])
