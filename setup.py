@@ -22,6 +22,7 @@ setup(name='tenyks-contrib',
       install_requires=[
           # -*- Extra requirements: -*-
           'tenyksservice>=2',
+          'pyxDamerauLevenshtein'
           'feedparser',
           'python-dateutil',
           'requests',
