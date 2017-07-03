@@ -40,7 +40,7 @@ def get_stats():
 
 
 def get_closest_text_bump(search_text):
-    search_text = search_text.lower()
+    search_text = search_text
     text_bumps = filter(lambda bump: bump['text'], get_bumps())
     if text_bumps:
         min_bump = min(
@@ -63,15 +63,14 @@ def run(data, settings):
     ]
 
     command_regex = re.compile(
-        '(?:.*)({0})(?:\s+(.*))?$'.format('|'.join(commands)),
-        re.I
+        '(?:.*)({0})(?:\s+(.*))?$'.format('|'.join(commands))
     )
 
-    match = command_regex.match(data['payload'])
+    match = command_regex.match(data['payload'].lower())
 
     if match:
         groups = match.groups()
-        command = groups[0].lower()
+        command = groups[0]
 
         if command == 'dank memes':
             return get_random_bump()

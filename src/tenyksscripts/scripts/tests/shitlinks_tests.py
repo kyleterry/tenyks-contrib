@@ -71,4 +71,4 @@ class TestShitLinksScript(unittest.TestCase):
 
 
 def is_link(string):
-    return re.compile('(.*)http:\/\/(.*)\.shithouse\.tv$').match(string)
+    return re.compile('(?:.*)http:\/\/(?:.*)\.shithouse\.tv$').match(string)
