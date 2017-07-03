@@ -63,7 +63,7 @@ def run(data, settings):
     ]
 
     command_regex = re.compile(
-        '^({0})(?:\s+(.*))?$'.format('|'.join(commands)),
+        '(?:.*)({0})(?:\s+(.*))?$'.format('|'.join(commands)),
         re.I
     )
 
