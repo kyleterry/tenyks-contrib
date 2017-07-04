@@ -61,6 +61,14 @@ class TestShitLinksScript(unittest.TestCase):
         response = shitlinks.run(data, None)
         assert is_link(response)
 
+    def test_text_search_with_repeated_text(self):
+        data = {
+            "payload": "dank text dank text"
+        }
+
+        response = shitlinks.run(data, None)
+        assert is_link(response)
+
     def test_text_search_no_body_command(self):
         data = {
             "payload": "dank text"

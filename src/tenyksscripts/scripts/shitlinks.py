@@ -1,5 +1,5 @@
 import re
-from pyxdameraulevenshtein import damerau_levenshtein_distance as edit_distance
+from fuzzywuzzy import process, fuzz
 import random
 import requests
 import json
@@ -24,9 +24,7 @@ def get_bumps():
 def get_random_bump():
     bumps = get_bumps()
     if bumps:
-        num_memes = len(bumps)
-        rnd = random.randrange(0, num_memes)
-        return get_bump_link(bumps[rnd])
+        return get_bump_link(random.choice(bumps))
     else:
         return "shit's fucked bro"
 
@@ -40,17 +38,21 @@ def get_stats():
 
 
 def get_closest_text_bump(search_text):
-    search_text = search_text
+    search_text = {'text': search_text}
     text_bumps = filter(lambda bump: bump['text'], get_bumps())
     if text_bumps:
-        min_bump = min(
+        best_bumps = process.extractBests(
+            search_text,
             text_bumps,
-            key=lambda bump: edit_distance(
-                bump['text'].lower(),
-                search_text
-            )
+            scorer=fuzz.token_set_ratio,
+            processor=lambda bump: bump['text'].lower()
         )
-        return get_bump_link(min_bump)
+        best_bumps = [
+            bump[0]
+            for bump in best_bumps
+            if bump[1] == best_bumps[0][1]
+        ]
+        return get_bump_link(random.choice(best_bumps))
     else:
         return 'no dice m8'
 
@@ -63,7 +65,7 @@ def run(data, settings):
     ]
 
     command_regex = re.compile(
-        '(?:.*)({0})(?:\s+(.*))?$'.format('|'.join(commands))
+        '(?:.*?)({0})(?:\s+(.*))?$'.format('|'.join(commands))
     )
 
     match = command_regex.match(data['payload'].lower())
