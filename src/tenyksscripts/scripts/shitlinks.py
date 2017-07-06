@@ -38,24 +38,7 @@ def get_stats():
 
 
 def get_closest_text_bump(search_text):
-    search_text = {'text': search_text}
-    text_bumps = filter(lambda bump: bump['text'], get_bumps())
-    if text_bumps:
-        best_bumps = process.extractBests(
-            search_text,
-            text_bumps,
-            scorer=fuzz.token_set_ratio,
-            processor=lambda bump: bump['text'].lower()
-        )
-        best_bumps = [
-            bump[0]
-            for bump in best_bumps
-            if bump[1] == best_bumps[0][1]
-        ]
-        return get_bump_link(random.choice(best_bumps))
-    else:
-        return 'no dice m8'
-
+    return u"http://neet.shithouse.tv/"
 
 def run(data, settings):
     commands = [
