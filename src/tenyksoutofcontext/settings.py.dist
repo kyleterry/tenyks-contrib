@@ -1,8 +1,8 @@
 DEBUG = False
-SERVICE_NAME = 'afk'
+SERVICE_NAME = 'outofcontext'
 SERVICE_VERSION = '0.0.2'
-SERVICE_UUID = '291e0c47-5a4c-11e4-a81b-b8e8562363ce'
-SERVICE_DESCRIPTION = 'Tracks users who are AFK.'
+SERVICE_UUID = '1867a9b7-73c3-42fe-9239-8f105e61d6ef'
+SERVICE_DESCRIPTION = 'out of context'
 ZMQ_CONNECTION = {
     'out': 'tcp://localhost:61124',
     'in': 'tcp://localhost:61123'

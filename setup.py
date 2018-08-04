@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 
-version = '0.3.1'
+version = '1.0.0'
 
 setup(name='tenyks-contrib',
       version=version,
@@ -23,7 +23,6 @@ setup(name='tenyks-contrib',
           # -*- Extra requirements: -*-
           'tenyksservice>=2',
           'fuzzywuzzy',
-          'python-Levenshtein',
           'feedparser',
           'python-dateutil',
           'requests',

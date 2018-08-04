@@ -1,0 +1,9 @@
+DEBUG = False
+SERVICE_NAME = 'feeds'
+SERVICE_VERSION = '0.0.2'
+SERVICE_UUID = '7d7c0ae8-6ec3-4538-b0a2-673edf022ebf'
+SERVICE_DESCRIPTION = 'subscribe and get rss and atom feeds'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}

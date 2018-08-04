@@ -1,0 +1,9 @@
+DEBUG = False
+SERVICE_NAME = 'gentoo'
+SERVICE_VERSION = '0.0.2'
+SERVICE_UUID = 'bb0d308e-2039-4235-9b99-1fbf8cf46923'
+SERVICE_DESCRIPTION = 'when has gentoo been mentioned. it\'s been a while, hasn\'t it?'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}

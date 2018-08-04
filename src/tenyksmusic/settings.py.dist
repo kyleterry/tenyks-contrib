@@ -1,0 +1,9 @@
+DEBUG = False
+SERVICE_NAME = 'music'
+SERVICE_VERSION = '0.0.2'
+SERVICE_UUID = '256a1e81-d789-4ef4-8287-01c54176c36c'
+SERVICE_DESCRIPTION = 'control a music server with an irc channel'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}

@@ -1,0 +1,9 @@
+DEBUG = False
+SERVICE_NAME = 'linkscraper'
+SERVICE_VERSION = '0.0.2'
+SERVICE_UUID = 'e2b32b67-a53f-4f2e-bfa1-22fcb6960f25'
+SERVICE_DESCRIPTION = 'listens for urls and posts them to a visualizer and then reports the title of the page to the channel'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}

@@ -1,0 +1,9 @@
+DEBUG = False
+SERVICE_NAME = 'hahameter'
+SERVICE_VERSION = '0.0.2'
+SERVICE_UUID = '9121565a-791d-4791-98cb-a6453a7cd5cb'
+SERVICE_DESCRIPTION = 'track hahas and log the offenders'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}

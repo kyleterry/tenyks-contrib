@@ -1,0 +1,9 @@
+DEBUG = True
+SERVICE_NAME = 'webpagemonitor'
+SERVICE_VERSION = '0.1.0'
+SERVICE_UUID = '05738406-cdaa-47d3-89f5-b55ba36a4879'
+SERVICE_DESCRIPTION = 'monitor webpages for things'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}

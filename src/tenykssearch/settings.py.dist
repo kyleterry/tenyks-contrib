@@ -1,0 +1,9 @@
+DEBUG = True
+SERVICE_NAME = 'search'
+SERVICE_VERSION = '0.1.0'
+SERVICE_UUID = '6c534ebb-f1aa-43d2-bc6c-fa5b09428499'
+SERVICE_DESCRIPTION = 'search the internet for things'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}

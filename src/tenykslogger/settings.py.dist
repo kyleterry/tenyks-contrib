@@ -1,0 +1,9 @@
+DEBUG = False
+SERVICE_NAME = 'logger'
+SERVICE_VERSION = '0.0.2'
+SERVICE_UUID = '3d279174-6d90-4732-b1bf-b378aedd91bf'
+SERVICE_DESCRIPTION = 'logs all messages sent to configured channels'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}

@@ -1,0 +1,9 @@
+DEBUG = True
+SERVICE_NAME = 'weblistener'
+SERVICE_VERSION = '0.1.0'
+SERVICE_UUID = 'b5cba483-4d20-4820-a65d-980d6e96011e'
+SERVICE_DESCRIPTION = 'send messages to an http endpoint so they can be posted to channels'
+ZMQ_CONNECTION = {
+    'out': 'tcp://localhost:61124',
+    'in': 'tcp://localhost:61123'
+}
