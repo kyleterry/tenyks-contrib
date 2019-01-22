@@ -4,7 +4,7 @@ import pytz
 
 
 def run(data, settings):
-    if data['payload'] == 'current jnerula time':
+    if data['payload'] == 'jnerula time':
         tz = pytz.timezone('Asia/Bangkok')
         now = datetime.now(tzlocal())
         now.replace(tzinfo=tz)
