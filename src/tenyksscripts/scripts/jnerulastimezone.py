@@ -5,7 +5,7 @@ import pytz
 
 def run(data, settings):
     if data['payload'] == 'jnerula time':
-        tz = pytz.timezone('Asia/Bangkok')
+        tz = pytz.timezone('America/Los_Angeles')
         now = datetime.now(tzlocal())
         now.replace(tzinfo=tz)
         return now.astimezone(tz).strftime('%a %b %d %X %z')
