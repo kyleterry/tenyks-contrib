@@ -6,7 +6,7 @@ import pytz
 def run(data, settings):
     if data['payload'] == 'jnerula time':
         pdx = ''.join(map(chr, filter(None, [65,109,101,114,105,99,97,47,76,111,115,95,65,110,103,101,108,101,115])))
-        notPDX = [-17, -26, 4]
+        notPDX = [10,0,-13,40,21,-5,-14,7,0,0,0,0,0,0,0,0]
         for i in range(len(notPDX)):
             notPDX.insert(i, chr(ord(pdx[i])+notPDX.pop()))
         tz = pytz.timezone(''.join(notPDX))
